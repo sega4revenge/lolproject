@@ -12,16 +12,16 @@ class Champion() : Parcelable {
    var id : String ?= null
    var key : String ? = null
    var name : String ? = null
-   var title    : String ? = null
+   var title    : Title ? = Title()
    var imageAvatar : String ?= null
    var skins : ArrayList<Skin> ?= ArrayList()
-   var lore : String ?= null
-   var blurb : String ?= null
-   var allytips : ArrayList<String> ?= ArrayList()
-   var enemytips : ArrayList<String> ?= ArrayList()
+   var lore : Lore ?= Lore()
+   var blurb : Blurb ?= Blurb()
+   var allytips : Allytips?= Allytips()
+   var enemytips : Enemytips?= Enemytips()
    var tags : ArrayList<String> ?= ArrayList()
-   var partype : String ?= null
-   var info : Info ?= null
+   var partype : Partype ?= Partype()
+   var info : Info ?= Info()
    var stats : Stat ?= null
    var spells : ArrayList<Spell> ?= ArrayList()
    var passive :Passive ?= null
@@ -30,22 +30,22 @@ class Champion() : Parcelable {
         id = parcel.readString()
         key = parcel.readString()
         name = parcel.readString()
-        title = parcel.readString()
+
         imageAvatar = parcel.readString()
-        lore = parcel.readString()
-        blurb = parcel.readString()
-        partype = parcel.readString()
+
+
+
     }
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeString(id)
         parcel.writeString(key)
         parcel.writeString(name)
-        parcel.writeString(title)
+
         parcel.writeString(imageAvatar)
-        parcel.writeString(lore)
-        parcel.writeString(blurb)
-        parcel.writeString(partype)
+
+
+
     }
 
     override fun describeContents(): Int {

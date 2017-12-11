@@ -123,11 +123,11 @@ class MainActivity : AppCompatActivity(),SkinDetailPresenter.skinsDetail {
 
         placeSwitcher = findViewById<View>(R.id.ts_place) as TextSwitcher
         placeSwitcher!!.setFactory(TextViewFactory(R.style.PlaceTextView, false))
-        placeSwitcher!!.setCurrentText(championDetail.skins!![0].name)
+        placeSwitcher!!.setCurrentText(championDetail.skins!![0].name!!.vn)
 
         clockSwitcher = findViewById<View>(R.id.ts_clock) as TextSwitcher
         clockSwitcher!!.setFactory(TextViewFactory(R.style.ClockTextView, false))
-        clockSwitcher!!.setCurrentText(championDetail.skins!![0].name)
+        clockSwitcher!!.setCurrentText(championDetail.skins!![0].name!!.vn)
 
         descriptionsSwitcher = findViewById<View>(R.id.ts_description) as TextSwitcher
         descriptionsSwitcher!!.setInAnimation(this, android.R.anim.fade_in)
@@ -258,7 +258,7 @@ class MainActivity : AppCompatActivity(),SkinDetailPresenter.skinsDetail {
 
         placeSwitcher!!.setInAnimation(this@MainActivity, animV[0])
         placeSwitcher!!.setOutAnimation(this@MainActivity, animV[1])
-        placeSwitcher!!.setText(champion!!.skins!![pos % champion!!.skins!!.size].name!!)
+        placeSwitcher!!.setText(champion!!.skins!![pos % champion!!.skins!!.size].name!!.vn)
 
         clockSwitcher!!.setInAnimation(this@MainActivity, animV[0])
         clockSwitcher!!.setOutAnimation(this@MainActivity, animV[1])

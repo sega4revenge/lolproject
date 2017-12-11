@@ -9,9 +9,9 @@ import android.os.Parcelable
 class Skin() : Parcelable {
     var id: String? = null
     var num: String? = null
-    var name: String? = null
+    var name: Name? = Name()
     var chromas: String? = null
-    var price : String ?= null
+    var price : Price ?= Price()
     var type : String ?= null
     var imageLoading : String? = null
     var imageFull : String? = null
@@ -19,9 +19,9 @@ class Skin() : Parcelable {
     constructor(parcel: Parcel) : this() {
         id = parcel.readString()
         num = parcel.readString()
-        name = parcel.readString()
+
         chromas = parcel.readString()
-        price = parcel.readString()
+
         type = parcel.readString()
         imageLoading = parcel.readString()
         imageFull = parcel.readString()
@@ -30,9 +30,9 @@ class Skin() : Parcelable {
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeString(id)
         parcel.writeString(num)
-        parcel.writeString(name)
+
         parcel.writeString(chromas)
-        parcel.writeString(price)
+
         parcel.writeString(type)
         parcel.writeString(imageLoading)
         parcel.writeString(imageFull)

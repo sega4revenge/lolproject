@@ -8,22 +8,20 @@ import android.os.Parcelable
  */
 class Spell() : Parcelable {
     var id: String? = null
-    var name: String? = null
-    var description: String? = null
-    var tooltip: String? = null
+    var name: Name? = Name()
+    var description: Description? = Description()
+    var tooltip: Tooltip? = Tooltip()
 
     constructor(parcel: Parcel) : this() {
         id = parcel.readString()
-        name = parcel.readString()
-        description = parcel.readString()
-        tooltip = parcel.readString()
+
+
     }
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
         parcel.writeString(id)
-        parcel.writeString(name)
-        parcel.writeString(description)
-        parcel.writeString(tooltip)
+
+
     }
 
     override fun describeContents(): Int {

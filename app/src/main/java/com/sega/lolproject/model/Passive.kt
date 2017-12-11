@@ -7,19 +7,19 @@ import android.os.Parcelable
  * Created by sega4 on 06/12/2017.
  */
 class Passive() : Parcelable {
-    var name: String? = null
-    var description: String? = null
+    var name: Name? = Name()
+    var description: Description? = Description()
     var imagePassive: String? = null
 
     constructor(parcel: Parcel) : this() {
-        name = parcel.readString()
-        description = parcel.readString()
+
+
         imagePassive = parcel.readString()
     }
 
     override fun writeToParcel(parcel: Parcel, flags: Int) {
-        parcel.writeString(name)
-        parcel.writeString(description)
+
+
         parcel.writeString(imagePassive)
     }
 
