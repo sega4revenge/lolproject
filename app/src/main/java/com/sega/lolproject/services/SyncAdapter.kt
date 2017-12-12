@@ -8,15 +8,23 @@ import android.net.Uri
 import android.os.Bundle
 import android.util.Log
 import com.sega.lolproject.model.Champion
+import com.sega.lolproject.presenter.ListChampionlPresenter
 import com.sega.lolproject.presenter.SkinDetailPresenter
 import io.realm.Realm
+import io.realm.RealmList
 import java.util.*
 
 /**
  * Created by sega4 on 11/12/2017.
  */
 
-class SyncAdapter internal constructor(private val mContext: Context, autoInitialize: Boolean) : AbstractThreadedSyncAdapter(mContext, autoInitialize), SkinDetailPresenter.skinsDetail {
+class SyncAdapter internal constructor(private val mContext: Context, autoInitialize: Boolean) : AbstractThreadedSyncAdapter(mContext, autoInitialize), SkinDetailPresenter.skinsDetail, ListChampionlPresenter.listchampions {
+    override fun getDetail(productlist: RealmList<Champion>) {
+        realm!!.beginTransaction()
+        realm!!.copyToRealm(productlist)
+        realm!!.commitTransaction()
+    }
+
     override fun setErrorNotFound() {
         TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
     }
@@ -41,12 +49,12 @@ class SyncAdapter internal constructor(private val mContext: Context, autoInitia
     private val mCountProviderFailedMax = 3
     internal var calendarid: String? = null
     internal var notifyevent = ArrayList<Uri>()
-    var mSkinPresenter: SkinDetailPresenter? = null
+    var mListChampions: ListChampionlPresenter?= null
 
     init {
         println("da khoi tao")
         this.realm = RealmController.with(mContext).realm
-        mSkinPresenter = SkinDetailPresenter(this)
+        mListChampions = ListChampionlPresenter(this)
         mAccountManager = AccountManager.get(mContext)
         try {
             mVersion = mContext.packageManager.getPackageInfo(mContext.packageName, 0).versionName
@@ -64,7 +72,8 @@ class SyncAdapter internal constructor(private val mContext: Context, autoInitia
 
 
         this.mCountPerformSync += 1
-        mSkinPresenter!!.getSkinList("Sona")
+//        mSkinPresenter!!.getSkinList("Sona")
+        mListChampions?.getListChampions()
         Log.v(TAG, "onPerformSync() count:" + 1.toString() + " on " + account.name + " with URL ")
 
         Log.i(TAG, "Entries:                       " + syncResult.stats.numEntries.toString())

@@ -93,7 +93,7 @@ class MainActivity :YouTubeBaseActivity(), YouTubePlayer.OnInitializedListener {
         setContentView(R.layout.activity_main)
 
 
-       champion =  RealmController.with(this).getChampion("Aatrox")
+       champion =  RealmController.with(this).getChampion("Zoe")
         println(champion!!.name)
         sliderAdapter = SliderAdapter(champion!!.skins!!, champion!!.skins!!.size, OnCardClickListener())
         initRecyclerView()
@@ -134,24 +134,24 @@ class MainActivity :YouTubeBaseActivity(), YouTubePlayer.OnInitializedListener {
         temperatureSwitcher!!.setCurrentText("220 RP")
 
         placeSwitcher = findViewById<View>(R.id.ts_place) as TextSwitcher
-        placeSwitcher!!.setFactory(TextViewFactory(R.style.PlaceTextView, false))
+        placeSwitcher!!.setFactory(TextViewFactory(R.style.TemperatureTextView, false))
         placeSwitcher!!.setCurrentText(champion!!.skins!![0]!!.name!!.vn)
 
         clockSwitcher = findViewById<View>(R.id.ts_clock) as TextSwitcher
-        clockSwitcher!!.setFactory(TextViewFactory(R.style.ClockTextView, false))
+        clockSwitcher!!.setFactory(TextViewFactory(R.style.TemperatureTextView, false))
         clockSwitcher!!.setCurrentText(champion!!.skins!![0]!!.name!!.vn)
 
         descriptionsSwitcher = findViewById<View>(R.id.ts_description) as TextSwitcher
         descriptionsSwitcher!!.setInAnimation(this, android.R.anim.fade_in)
         descriptionsSwitcher!!.setOutAnimation(this, android.R.anim.fade_out)
-        descriptionsSwitcher!!.setFactory(TextViewFactory(R.style.DescriptionTextView, false))
+        descriptionsSwitcher!!.setFactory(TextViewFactory(R.style.TemperatureTextView, false))
         descriptionsSwitcher!!.setCurrentText(champion!!.skins!![0]!!.num)
         descriptionsSwitcher!!.setCurrentText(champion.skins!![0]!!.num)
         youTubePlayerView = youtube_player_view
         youTubePlayerView?.initialize(API_KEY, this)
 
         linkSkin = champion.skins!![0]!!.link
-
+        onActiveCardChange(0)
     }
 
 
@@ -175,7 +175,7 @@ class MainActivity :YouTubeBaseActivity(), YouTubePlayer.OnInitializedListener {
             animV[0] = R.anim.slide_in_bottom
             animV[1] = R.anim.slide_out_top
         }
-        countries_text.text =    (champion!!.name)
+        countries_text.text =    (champion!!.name + " - " + champion!!.title!!.vn)
         countries_text!!.typeface = Typeface.createFromAsset(assets, "open-sans-extrabold.ttf")
         countryOffset1 = resources.getDimensionPixelSize(R.dimen.left_offset)
 
@@ -194,6 +194,26 @@ class MainActivity :YouTubeBaseActivity(), YouTubePlayer.OnInitializedListener {
         clockSwitcher!!.setText(champion!!.skins!![pos % champion!!.skins!!.size]!!.num!!)
 
         descriptionsSwitcher!!.setText(getString(descriptions[pos % descriptions.size]))
+
+//        attack.progressColor = R.color.blue
+//        attack.progressBackgroundColor = R.color.design_snackbar_background_color
+//        attack.setIconBackgroundColor(R.color.abc_btn_colored_borderless_text_material)
+        attack.max= 10F
+        attack.progress = champion!!.info?.attack?.toFloat()!!
+        magic.max = 10F
+        magic.progress = champion!!.info?.magic?.toFloat()!!
+        defense.max= 10F
+        defense.progress = champion!!.info?.defense?.toFloat()!!
+        difficult.max= 10F
+        difficult.progress = champion!!.info?.difficulty?.toFloat()!!
+//        attack.progress = champion!!.info?.attack?.toFloat()!!
+
+//        defense.progressColor = R.color.blue
+//        defense.progressBackgroundColor = R.color.design_snackbar_background_color
+//        defense.setIconBackgroundColor(R.color.abc_btn_colored_borderless_text_material)
+//        defense.max = 10F
+//        defense.progress = champion!!.info?.defense?.toFloat()!!
+//        defense.iconImageResource = R.drawable.img_error
         linkSkin = champion!!.skins!![pos % champion!!.skins!!.size]!!.link!!
 //        youTubePlayerView?.initialize(API_KEY, this)
         youTubePlayer?.cueVideo(linkSkin)
