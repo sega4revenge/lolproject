@@ -13,6 +13,7 @@ class Skin() : Parcelable {
     var chromas: String? = null
     var price : Price ?= Price()
     var type : String ?= null
+    var link : String ?= null
     var imageLoading : String? = null
     var imageFull : String? = null
 
@@ -23,6 +24,7 @@ class Skin() : Parcelable {
         chromas = parcel.readString()
 
         type = parcel.readString()
+        link = parcel.readString()
         imageLoading = parcel.readString()
         imageFull = parcel.readString()
     }
@@ -34,6 +36,7 @@ class Skin() : Parcelable {
         parcel.writeString(chromas)
 
         parcel.writeString(type)
+        parcel.writeString(link)
         parcel.writeString(imageLoading)
         parcel.writeString(imageFull)
     }

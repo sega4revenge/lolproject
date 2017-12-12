@@ -1,6 +1,7 @@
 package com.sega.lolproject.cards
 
 
+import android.content.Context
 import android.support.v7.widget.RecyclerView
 import android.view.LayoutInflater
 import android.view.View
@@ -9,7 +10,7 @@ import com.sega.lolproject.R
 import com.sega.lolproject.model.Skin
 
 
-class SliderAdapter(private val content: ArrayList<Skin>, private val count: Int, private val listener: View.OnClickListener?) : RecyclerView.Adapter<SliderCard>() {
+class SliderAdapter(private val content: ArrayList<Skin>, private val count: Int, private val listener: View.OnClickListener?, private val context : Context) : RecyclerView.Adapter<SliderCard>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SliderCard {
         val view = LayoutInflater
@@ -17,7 +18,8 @@ class SliderAdapter(private val content: ArrayList<Skin>, private val count: Int
                 .inflate(R.layout.layout_slider_card, parent, false)
 
         if (listener != null) {
-            view.setOnClickListener { view -> listener.onClick(view) }
+            view.setOnClickListener { view ->
+                listener.onClick(view) }
         }
 
         return SliderCard(view)
@@ -27,6 +29,11 @@ class SliderAdapter(private val content: ArrayList<Skin>, private val count: Int
         val arrayskin = Array(content.size, { i -> content[i].imageLoading })
         println(arrayskin.size.toString() + "ffdhfh")
         holder.setContent(arrayskin[position % arrayskin.size].toString())
+//        holder.itemView.setOnClickListener {
+//            Log.e("gdfg",arrayskin[position])
+////            val intent = Intent(context, DetailsActivity::class.java)
+////            intent.putExtra(Constants.BUNDLE_IMAGE_ID,arrayskin[position])
+//        }
     }
 
     override fun onViewRecycled(holder: SliderCard?) {

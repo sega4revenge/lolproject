@@ -5,17 +5,17 @@ import android.content.Intent
 import android.graphics.Typeface
 import android.os.Build
 import android.os.Bundle
-import android.support.annotation.DrawableRes
 import android.support.annotation.StyleRes
-import android.support.v4.view.ViewCompat
-import android.support.v7.app.AppCompatActivity
 import android.support.v7.widget.CardView
 import android.support.v7.widget.RecyclerView
 import android.view.Gravity
 import android.view.View
 import android.view.ViewGroup
-import android.view.ViewTreeObserver
 import android.widget.*
+import com.google.android.youtube.player.YouTubeBaseActivity
+import com.google.android.youtube.player.YouTubeInitializationResult
+import com.google.android.youtube.player.YouTubePlayer
+import com.google.android.youtube.player.YouTubePlayerView
 import com.sega.lolproject.R
 import com.sega.lolproject.cards.SliderAdapter
 import com.sega.lolproject.lib.detail.CardSliderLayoutManager
@@ -24,22 +24,38 @@ import com.sega.lolproject.model.Champion
 import com.sega.lolproject.presenter.SkinDetailPresenter
 import com.sega.lolproject.util.DecodeBitmapTask
 import kotlinx.android.synthetic.main.activity_main.*
-import java.util.*
 
 /**
  * Created by sega4 on 06/12/2017.
  */
 
-class MainActivity : AppCompatActivity(),SkinDetailPresenter.skinsDetail {
+class MainActivity :YouTubeBaseActivity(),SkinDetailPresenter.skinsDetail, YouTubePlayer.OnInitializedListener {
+    override fun onInitializationSuccess(p0: YouTubePlayer.Provider?, p1: YouTubePlayer?, p2: Boolean) {
+        if (null == p1) return
+        youTubePlayer = p1
+
+        // Start buffering
+        if (!p2) {
+            youTubePlayer!!.cueVideo(setCueVideo())
+
+        }    }
+
+    override fun onInitializationFailure(p0: YouTubePlayer.Provider?, p1: YouTubeInitializationResult?) {
+        Toast.makeText(this, "Failed to initialize.", Toast.LENGTH_LONG).show()
+    }
+
     var champion : Champion?=null
+    fun setCueVideo(): String? {
+        return linkSkin
+    }
     override fun getDetail(championDetail: Champion) {
         champion = championDetail
         println(championDetail.name)
-        sliderAdapter = SliderAdapter(championDetail.skins!!, championDetail.skins!!.size, OnCardClickListener())
+        sliderAdapter = SliderAdapter(championDetail.skins!!, championDetail.skins!!.size, OnCardClickListener(),this)
         initRecyclerView()
 
         initSwitchers(championDetail)
-        initGreenDot()
+//        initGreenDot()
     }
 
     override fun setErrorNotFound() {
@@ -49,11 +65,17 @@ class MainActivity : AppCompatActivity(),SkinDetailPresenter.skinsDetail {
     override fun setErrorMessage(errorMessage: String) {
         println(errorMessage)
     }
+    companion object {
+        val API_KEY = "AIzaSyCXAMVTzLpym1OnufwXhW3_jWy98dmfjto"
 
+        //https://www.youtube.com/watch?v=<VIDEO_ID>
+    }
 
     var mSkinPresenter: SkinDetailPresenter? = null
     private val dotCoords = Array(5) { IntArray(2) }
-
+    var youTubePlayerView : YouTubePlayerView?= null
+    var youTubePlayer : YouTubePlayer ?= null
+    var linkSkin : String ?= null
 
     private var sliderAdapter : SliderAdapter? = null
     private val pics = intArrayOf(R.drawable.p1, R.drawable.p2, R.drawable.p3, R.drawable.p4, R.drawable.p5)
@@ -65,12 +87,12 @@ class MainActivity : AppCompatActivity(),SkinDetailPresenter.skinsDetail {
     private val times = arrayOf("Aug 1 - Dec 15    7:00-18:00", "Sep 5 - Nov 10    8:00-16:00", "Mar 8 - May 21    7:00-18:00")
     private var layoutManger: CardSliderLayoutManager? = null
     private var recyclerView: RecyclerView? = null
-    private var mapSwitcher: ImageSwitcher? = null
+//    private var mapSwitcher: ImageSwitcher? = null
     private var temperatureSwitcher: TextSwitcher? = null
     private var placeSwitcher: TextSwitcher? = null
     private var clockSwitcher: TextSwitcher? = null
     private var descriptionsSwitcher: TextSwitcher? = null
-    private var greenDot: View? = null
+//    private var greenDot: View? = null
 
     private var country1TextView: TextView? = null
     private var country2TextView: TextView? = null
@@ -86,9 +108,9 @@ class MainActivity : AppCompatActivity(),SkinDetailPresenter.skinsDetail {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-
         mSkinPresenter = SkinDetailPresenter(this)
-        mSkinPresenter!!.getSkinList("Sona")
+        mSkinPresenter!!.getSkinList("Aatrox")
+
     }
 
     private fun initRecyclerView() {
@@ -117,6 +139,7 @@ class MainActivity : AppCompatActivity(),SkinDetailPresenter.skinsDetail {
     }
 
     private fun initSwitchers(championDetail : Champion) {
+
         temperatureSwitcher = findViewById<View>(R.id.ts_temperature) as TextSwitcher
         temperatureSwitcher!!.setFactory(TextViewFactory(R.style.TemperatureTextView, true))
         temperatureSwitcher!!.setCurrentText("220 RP")
@@ -134,17 +157,19 @@ class MainActivity : AppCompatActivity(),SkinDetailPresenter.skinsDetail {
         descriptionsSwitcher!!.setOutAnimation(this, android.R.anim.fade_out)
         descriptionsSwitcher!!.setFactory(TextViewFactory(R.style.DescriptionTextView, false))
         descriptionsSwitcher!!.setCurrentText(championDetail.skins!![0].num)
+        youTubePlayerView = youtube_player_view
+        youTubePlayerView?.initialize(API_KEY, this)
 
-        mapSwitcher = findViewById<View>(R.id.ts_map) as ImageSwitcher
-        mapSwitcher!!.setInAnimation(this, R.anim.fade_in)
-        mapSwitcher!!.setOutAnimation(this, R.anim.fade_out)
-        mapSwitcher!!.setFactory(ImageViewFactory())
-        mapSwitcher!!.setImageResource(maps[0])
-
-        mapLoadListener = DecodeBitmapTask.Listener { bitmap ->
-            (mapSwitcher!!.nextView as ImageView).setImageBitmap(bitmap)
-            mapSwitcher!!.showNext()
-        }
+        linkSkin = championDetail.skins!![0].link
+//        mapSwitcher = findViewById<View>(R.id.ts_map) as ImageSwitcher
+//        mapSwitcher!!.setInAnimation(this, R.anim.fade_in)
+//        mapSwitcher!!.setOutAnimation(this, R.anim.fade_out)
+//        mapSwitcher!!.setFactory(ImageViewFactory())
+//        mapSwitcher!!.setImageResource(maps[0])
+//        mapLoadListener = DecodeBitmapTask.Listener { bitmap ->
+//            (mapSwitcher!!.nextView as ImageView).setImageBitmap(bitmap)
+//            mapSwitcher!!.showNext()
+//        }
     }
 
  /*   private fun initCountryText() {
@@ -163,34 +188,34 @@ class MainActivity : AppCompatActivity(),SkinDetailPresenter.skinsDetail {
         country2TextView!!.typeface = Typeface.createFromAsset(assets, "open-sans-extrabold.ttf")
     }
 */
-    private fun initGreenDot() {
-        mapSwitcher!!.viewTreeObserver.addOnGlobalLayoutListener(object : ViewTreeObserver.OnGlobalLayoutListener {
-            override fun onGlobalLayout() {
-                mapSwitcher!!.viewTreeObserver.removeOnGlobalLayoutListener(this)
-
-                val viewLeft = mapSwitcher!!.left
-                val viewTop = mapSwitcher!!.top + mapSwitcher!!.height / 3
-
-                val border = 100
-                val xRange = Math.max(1, mapSwitcher!!.width - border * 2)
-                val yRange = Math.max(1, mapSwitcher!!.height / 3 * 2 - border * 2)
-
-                val rnd = Random()
-
-                var i = 0
-                val cnt = dotCoords.size
-                while (i < cnt) {
-                    dotCoords[i][0] = viewLeft + border + rnd.nextInt(xRange)
-                    dotCoords[i][1] = viewTop + border + rnd.nextInt(yRange)
-                    i++
-                }
-
-                greenDot = findViewById(R.id.green_dot)
-                greenDot!!.x = dotCoords[0][0].toFloat()
-                greenDot!!.y = dotCoords[0][1].toFloat()
-            }
-        })
-    }
+//    private fun initGreenDot() {
+//        mapSwitcher!!.viewTreeObserver.addOnGlobalLayoutListener(object : ViewTreeObserver.OnGlobalLayoutListener {
+//            override fun onGlobalLayout() {
+//                mapSwitcher!!.viewTreeObserver.removeOnGlobalLayoutListener(this)
+//
+//                val viewLeft = mapSwitcher!!.left
+//                val viewTop = mapSwitcher!!.top + mapSwitcher!!.height / 3
+//
+//                val border = 100
+//                val xRange = Math.max(1, mapSwitcher!!.width - border * 2)
+//                val yRange = Math.max(1, mapSwitcher!!.height / 3 * 2 - border * 2)
+//
+//                val rnd = Random()
+//
+//                var i = 0
+//                val cnt = dotCoords.size
+//                while (i < cnt) {
+//                    dotCoords[i][0] = viewLeft + border + rnd.nextInt(xRange)
+//                    dotCoords[i][1] = viewTop + border + rnd.nextInt(yRange)
+//                    i++
+//                }
+//
+//                greenDot = findViewById(R.id.green_dot)
+//                greenDot!!.x = dotCoords[0][0].toFloat()
+//                greenDot!!.y = dotCoords[0][1].toFloat()
+//            }
+//        })
+//    }
 
   /*  private fun setCountryText(text: String, left2right: Boolean) {
         val invisibleText: TextView
@@ -237,7 +262,6 @@ class MainActivity : AppCompatActivity(),SkinDetailPresenter.skinsDetail {
     private fun onActiveCardChange(pos: Int) {
         val animH = intArrayOf(R.anim.slide_in_right, R.anim.slide_out_left)
         val animV = intArrayOf(R.anim.slide_in_top, R.anim.slide_out_bottom)
-
         val left2right = pos < currentPosition
         if (left2right) {
             animH[0] = R.anim.slide_in_left
@@ -265,28 +289,32 @@ class MainActivity : AppCompatActivity(),SkinDetailPresenter.skinsDetail {
         clockSwitcher!!.setText(champion!!.skins!![pos % champion!!.skins!!.size].num!!)
 
         descriptionsSwitcher!!.setText(getString(descriptions[pos % descriptions.size]))
+        linkSkin = champion!!.skins!![pos % champion!!.skins!!.size].link!!
+//        youTubePlayerView?.initialize(API_KEY, this)
+        youTubePlayer?.cueVideo(linkSkin)
+//        youTubePlayer?.loadVideo(linkSkin)
+//        youTubePlayer?.cueVideo(linkSkin)
+//        showMap(maps[pos % maps.size])
 
-        showMap(maps[pos % maps.size])
-
-        ViewCompat.animate(greenDot)
-                .translationX(dotCoords[pos % dotCoords.size][0].toFloat())
-                .translationY(dotCoords[pos % dotCoords.size][1].toFloat())
-                .start()
+//        ViewCompat.animate(greenDot)
+//                .translationX(dotCoords[pos % dotCoords.size][0].toFloat())
+//                .translationY(dotCoords[pos % dotCoords.size][1].toFloat())
+//                .start()
 
         currentPosition = pos
     }
 
-    private fun showMap(@DrawableRes resId: Int) {
-        if (decodeMapBitmapTask != null) {
-            decodeMapBitmapTask!!.cancel(true)
-        }
-
-        val w = mapSwitcher!!.width
-        val h = mapSwitcher!!.height
-
-        decodeMapBitmapTask = DecodeBitmapTask(resources, resId, w, h, mapLoadListener!!)
-        decodeMapBitmapTask!!.execute()
-    }
+//    private fun showMap(@DrawableRes resId: Int) {
+//        if (decodeMapBitmapTask != null) {
+//            decodeMapBitmapTask!!.cancel(true)
+//        }
+//
+//        val w = mapSwitcher!!.width
+//        val h = mapSwitcher!!.height
+//
+//        decodeMapBitmapTask = DecodeBitmapTask(resources, resId, w, h, mapLoadListener!!)
+//        decodeMapBitmapTask!!.execute()
+//    }
 
     private inner class TextViewFactory internal constructor(@param:StyleRes @field:StyleRes
                                                              internal val styleId: Int, internal val center: Boolean) : ViewSwitcher.ViewFactory {
@@ -324,7 +352,6 @@ class MainActivity : AppCompatActivity(),SkinDetailPresenter.skinsDetail {
     private inner class OnCardClickListener : View.OnClickListener {
         override fun onClick(view: View) {
             val lm = recyclerView!!.layoutManager as CardSliderLayoutManager
-
             if (lm.isSmoothScrolling) {
                 return
             }
@@ -336,9 +363,13 @@ class MainActivity : AppCompatActivity(),SkinDetailPresenter.skinsDetail {
 
             val clickedPosition = recyclerView!!.getChildAdapterPosition(view)
             if (clickedPosition == activeCardPosition) {
-                val intent = Intent(this@MainActivity, DetailsActivity::class.java)
-                intent.putExtra(DetailsActivity.BUNDLE_IMAGE_ID, pics[activeCardPosition % pics.size])
-
+//                val intent = Intent(this@MainActivity, DetailsActivity::class.java)
+//                Log.e("linkkk",champion!!.skins!![activeCardPosition % champion!!.skins!!.size].imageFull)
+//                intent.putExtra(DetailsActivity.BUNDLE_IMAGE_ID, champion!!.skins!![activeCardPosition % champion!!.skins!!.size].imageFull)
+                val intent = Intent(this@MainActivity, Fullscreen::class.java)
+                intent.putExtra("pos", activeCardPosition)
+                intent.putParcelableArrayListExtra("data", champion!!.skins!!)
+//                startActivity(i)
                 if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
                     startActivity(intent)
                 } else {
