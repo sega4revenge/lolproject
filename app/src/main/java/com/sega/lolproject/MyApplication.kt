@@ -22,6 +22,9 @@ import android.content.Context
 import android.graphics.BitmapFactory
 import com.androidnetworking.AndroidNetworking
 import com.androidnetworking.common.ConnectionQuality
+import com.sega.lolproject.services.MyMigration
+import io.realm.Realm
+import io.realm.RealmConfiguration
 import okhttp3.OkHttpClient
 import java.util.concurrent.TimeUnit
 
@@ -36,6 +39,10 @@ class MyApplication : Application() {
     override fun onCreate() {
         super.onCreate()
         instance = this
+        Realm.init(this)
+        val config = RealmConfiguration.Builder() .schemaVersion(2) .migration(MyMigration()).build()
+
+        Realm.setDefaultConfiguration(config)
 
         val okHttpClient = OkHttpClient().newBuilder()
                 .connectTimeout(5, TimeUnit.SECONDS)

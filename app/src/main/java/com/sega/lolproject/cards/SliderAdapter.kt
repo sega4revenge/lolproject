@@ -8,9 +8,10 @@ import android.view.View
 import android.view.ViewGroup
 import com.sega.lolproject.R
 import com.sega.lolproject.model.Skin
+import io.realm.RealmList
 
 
-class SliderAdapter(private val content: ArrayList<Skin>, private val count: Int, private val listener: View.OnClickListener?, private val context : Context) : RecyclerView.Adapter<SliderCard>() {
+class SliderAdapter(private val content: RealmList<Skin>, private val count: Int, private val listener: View.OnClickListener?) : RecyclerView.Adapter<SliderCard>() {
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): SliderCard {
         val view = LayoutInflater
@@ -26,7 +27,7 @@ class SliderAdapter(private val content: ArrayList<Skin>, private val count: Int
     }
 
     override fun onBindViewHolder(holder: SliderCard, position: Int) {
-        val arrayskin = Array(content.size, { i -> content[i].imageLoading })
+        val arrayskin = Array(content.size, { i -> content[i]!!.imageLoading })
         println(arrayskin.size.toString() + "ffdhfh")
         holder.setContent(arrayskin[position % arrayskin.size].toString())
 //        holder.itemView.setOnClickListener {

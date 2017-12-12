@@ -20,7 +20,8 @@ import com.sega.lolproject.customview.ExtendedViewPager
 import com.sega.lolproject.customview.ImageLoader
 import com.sega.lolproject.customview.TouchImageView
 import com.sega.lolproject.model.Skin
-import java.util.*
+import com.sega.lolproject.services.RealmController
+import io.realm.RealmList
 
 /**a
  * Created by Sega on 09/08/2016.
@@ -31,7 +32,7 @@ class Fullscreen : Activity(), View.OnTouchListener {
     internal var savedMatrix = Matrix()
     internal var start = PointF()
     internal var oldDist: Float = 0.toFloat()
-    internal var listimage: ArrayList<Skin>? = ArrayList()
+    internal var listimage: RealmList<Skin>? = RealmList()
     internal var pos: Int = 0
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -110,7 +111,7 @@ class Fullscreen : Activity(), View.OnTouchListener {
 
             val img = TouchImageView(container.context)
             val mLoader = ImageLoader(container.context)
-            mLoader.DisplayImageFull(listimage!![position].imageFull, img)
+            mLoader.DisplayImageFull(listimage!![position]!!.imageFull, img)
             container.addView(img, LinearLayout.LayoutParams.MATCH_PARENT, LinearLayout.LayoutParams.MATCH_PARENT)
             return img
         }
@@ -158,7 +159,8 @@ class Fullscreen : Activity(), View.OnTouchListener {
         val extras = intent.extras
         pos = extras!!.getInt("pos")
 //        println(pos.toString() + "ok")
-        listimage = extras.getParcelableArrayList("data")
+        listimage = RealmController.with(this).getChampion(extras!!.getString("id")).skins
+
         assert(listimage != null)
 //        println(listimage!![pos])
         mViewPager.adapter = TouchImageAdapter()
