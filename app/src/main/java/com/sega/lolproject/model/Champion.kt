@@ -2,6 +2,7 @@ package com.sega.lolproject.model
 
 import io.realm.RealmList
 import io.realm.RealmObject
+import io.realm.annotations.PrimaryKey
 
 /**
  * Created by Sega on 23/03/2017.
@@ -9,6 +10,7 @@ import io.realm.RealmObject
 
 
 open class Champion : RealmObject() {
+   @PrimaryKey
    var id : String ?= null
    var key : String ? = null
    var name : String ? = null

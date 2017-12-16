@@ -1,7 +1,5 @@
 package com.sega.lolproject.model
 
-import io.realm.RealmList
-
 /**
  * Created by Sega on 23/03/2017.
  */
@@ -9,5 +7,5 @@ import io.realm.RealmList
 
 class ResponseList {
     val status : Int?=null
-    var listchampion : RealmList<Champion>? = null
+    var listchampion : ArrayList<String>? = ArrayList()
 }

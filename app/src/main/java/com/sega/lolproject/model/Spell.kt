@@ -10,6 +10,6 @@ open class Spell() :  RealmObject() {
     var name: Name? = Name()
     var description: Description? = Description()
     var tooltip: Tooltip? = Tooltip()
-
+    var image : String?=null
 
 }

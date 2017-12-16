@@ -159,8 +159,8 @@ class Fullscreen : Activity(), View.OnTouchListener {
         val extras = intent.extras
         pos = extras!!.getInt("pos")
 //        println(pos.toString() + "ok")
-        listimage = RealmController.with(this).getChampion(extras!!.getString("id")).skins
-
+        listimage = RealmController.with(this).getChampion(extras.getString("id")).skins
+        println(listimage!![0]!!.imageFull)
         assert(listimage != null)
 //        println(listimage!![pos])
         mViewPager.adapter = TouchImageAdapter()

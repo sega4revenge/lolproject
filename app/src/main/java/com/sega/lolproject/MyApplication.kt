@@ -23,6 +23,7 @@ import android.graphics.BitmapFactory
 import com.androidnetworking.AndroidNetworking
 import com.androidnetworking.common.ConnectionQuality
 import com.sega.lolproject.services.MyMigration
+import com.sega.lolproject.services.SessionManager
 import io.realm.Realm
 import io.realm.RealmConfiguration
 import okhttp3.OkHttpClient
@@ -34,7 +35,7 @@ import java.util.concurrent.TimeUnit
  */
 class MyApplication : Application() {
 
-
+    private var sessionmanager: SessionManager? = null
 
     override fun onCreate() {
         super.onCreate()
@@ -62,6 +63,7 @@ class MyApplication : Application() {
                 }
             }
         }
+        sessionmanager = SessionManager(instance!!)
 
     }
 
@@ -70,12 +72,12 @@ class MyApplication : Application() {
 
     }
 
-
+    fun getSessionsManager(): SessionManager? = this.sessionmanager
 
     companion object {
         var instance: MyApplication? = null
             private set
 
-
+        fun getManager() : SessionManager? = instance!!.getSessionsManager()
     }
 }

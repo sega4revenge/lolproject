@@ -98,7 +98,7 @@ class MainActivity :YouTubeBaseActivity(), YouTubePlayer.OnInitializedListener{
 
     private var decodeMapBitmapTask: DecodeBitmapTask? = null
     private var mapLoadListener: DecodeBitmapTask.Listener? = null
-    val options = RequestOptions()
+    private val options = RequestOptions()
             .centerCrop()
             .dontAnimate()
             .placeholder(R.drawable.img_error)
@@ -106,18 +106,30 @@ class MainActivity :YouTubeBaseActivity(), YouTubePlayer.OnInitializedListener{
             .priority(Priority.HIGH)!!
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+
+
+       champion =  RealmController.with(this).getChampion("Aatrox")
         setContentView(R.layout.activity_main)
+        attack.max= 10F
+        attack.progress = champion!!.info?.attack?.toFloat()!!
+        magic.max = 10F
+        magic.progress = champion!!.info?.magic?.toFloat()!!
+        defense.max= 10F
+        defense.progress = champion!!.info?.defense?.toFloat()!!
+        difficult.max= 10F
+        difficult.progress = champion!!.info?.difficulty?.toFloat()!!
        champion =  RealmController.with(this).getChampion("Azir")
         println(champion!!.name)
         sliderAdapter = SliderAdapter(champion!!.skins!!, champion!!.skins!!.size, OnCardClickListener())
-        var adapter_level = ArrayAdapter<String> (this,R.layout.spinner_item, resources.getStringArray(R.array.level))
+        val adapter_level = ArrayAdapter<String> (this,R.layout.spinner_item, resources.getStringArray(R.array.level))
         adapter_level.setDropDownViewResource(android.R.layout.simple_spinner_item)
         spinner_level.adapter = adapter_level
         spinner_level.setSelection(0)
         spinner_level.onItemSelectedListener = object : AdapterView.OnItemSelectedListener {
 
             override fun onItemSelected(parent: AdapterView<*>, view: View, pos: Int, id: Long) {
-            var a = resources.getStringArray(R.array.level)
+            val a = resources.getStringArray(R.array.level)
 //                Log.e("SELECT",a[pos])
                 when(pos) {
                     0 -> getFullStat118(champion!!)
@@ -133,7 +145,6 @@ class MainActivity :YouTubeBaseActivity(), YouTubePlayer.OnInitializedListener{
 
         }
         initRecyclerView()
-
         initSwitchers(champion!!)
 
     }
@@ -204,6 +215,7 @@ class MainActivity :YouTubeBaseActivity(), YouTubePlayer.OnInitializedListener{
 
         Log.e("stat",getStat("8","68","3.2").toString())
 //        price.text = champion?.price
+
         temperatureSwitcher = findViewById<View>(R.id.ts_temperature) as TextSwitcher
         temperatureSwitcher!!.setFactory(TextViewFactory(R.style.TemperatureTextView, true))
         temperatureSwitcher!!.setCurrentText("220 RP")
@@ -278,14 +290,7 @@ class MainActivity :YouTubeBaseActivity(), YouTubePlayer.OnInitializedListener{
 //        attack.progressColor = R.color.blue
 //        attack.progressBackgroundColor = R.color.design_snackbar_background_color
 //        attack.setIconBackgroundColor(R.color.abc_btn_colored_borderless_text_material)
-        attack.max= 10F
-        attack.progress = champion!!.info?.attack?.toFloat()!!
-        magic.max = 10F
-        magic.progress = champion!!.info?.magic?.toFloat()!!
-        defense.max= 10F
-        defense.progress = champion!!.info?.defense?.toFloat()!!
-        difficult.max= 10F
-        difficult.progress = champion!!.info?.difficulty?.toFloat()!!
+
 //        attack.progress = champion!!.info?.attack?.toFloat()!!
 
 //        defense.progressColor = R.color.blue
