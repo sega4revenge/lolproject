@@ -23,14 +23,33 @@ import java.io.File
 import java.io.FileOutputStream
 
 
+
+
 class BlankActivity : AppCompatActivity(), SkinDetailPresenter.skinsDetail {
-    override fun getListChampion(productlist: ArrayList<String>) {
+    override fun getListChampion(productlist: ArrayList<Champion>) {
         listChampion = productlist
         if (onlydata == 1)
-            temp = listChampion!!.indexOf(MyApplication.getManager()!!.getResumeOnly())
-        else
-            temp = listChampion!!.indexOf(MyApplication.getManager()!!.getResumeFull())
-        mListChampions!!.getDatachampion(listChampion!![temp])
+        {
+            if(MyApplication.getManager()!!.checkOnlyData())
+            {
+                println("database da ton tai")
+
+            }
+            else
+            temp = MyApplication.getManager()!!.getResumeOnly()
+        }
+
+        else {
+            if(MyApplication.getManager()!!.checkFullData())
+            {
+                println("database da ton tai")
+
+            }
+            else
+                temp = (MyApplication.getManager()!!.getResumeFull())
+        }
+
+        mListChampions!!.getDatachampion(listChampion!![temp].id!!)
     }
 
     var onlydata = 0
@@ -40,7 +59,7 @@ class BlankActivity : AppCompatActivity(), SkinDetailPresenter.skinsDetail {
     var tempiconspell = 0
     var activity: Activity? = null
     var rootFolder: File? = null
-    var listChampion: ArrayList<String>? = null
+    var listChampion: ArrayList<Champion>? = null
     private var realm: Realm? = null
     var mListChampions: SkinDetailPresenter? = null
     val options = RequestOptions()
@@ -63,9 +82,11 @@ class BlankActivity : AppCompatActivity(), SkinDetailPresenter.skinsDetail {
         this.realm = RealmController.with(this).realm
         mListChampions = SkinDetailPresenter(this)
         button.setOnClickListener {
-            startActivity(Intent(this, MainActivity::class.java))
+            startActivity(Intent(this, ChampionListActivity::class.java))
         }
         data.setOnClickListener {
+            tempskin = 0
+            tempiconspell = 0
             mListChampions!!.getListChampions()
         }
         only.setOnClickListener {
@@ -233,16 +254,25 @@ class BlankActivity : AppCompatActivity(), SkinDetailPresenter.skinsDetail {
                             if (tempiconspell < champion.spells!!.size) {
                                 downloadIconspell(champion)
                             } else {
+                                champion.allytips!!.parentid = champion.id
+                                champion.enemytips!!.parentid = champion.id
+                                champion.info!!.parentid =  champion.id
+                                champion.stats!!.parentid =  champion.id
+                                champion.partype!!.parentid =  champion.id
                                 realm!!.beginTransaction()
                                 realm!!.copyToRealmOrUpdate(champion)
                                 realm!!.commitTransaction()
+
                                 temp++
-                                MyApplication.getManager()!!.update_fulldata_champion(listChampion!![temp])
+                                MyApplication.getManager()!!.update_fulldata_champion(temp)
                                 if (temp < listChampion!!.size) {
+
                                     tempiconspell = 0
                                     tempskin = 0
-                                    mListChampions!!.getDatachampion(listChampion!![temp])
+                                    println(temp)
                                     println(listChampion!![temp])
+                                    mListChampions!!.getDatachampion(listChampion!![temp].id!!)
+
                                 } else {
                                     MyApplication.getManager()!!.storeFullData(true)
                                     tempskin = 0
@@ -279,18 +309,41 @@ class BlankActivity : AppCompatActivity(), SkinDetailPresenter.skinsDetail {
                 for (i in 0..productlist.spells!!.size - 1) {
                     productlist.spells!![i]!!.image = champion.spells!![i]!!.image
                 }
+                productlist.allytips!!.parentid =  productlist.id
+                productlist.enemytips!!.parentid =  productlist.id
+                productlist.info!!.parentid = productlist.id
+                productlist.stats!!.parentid = productlist.id
+                productlist.partype!!.parentid = productlist.id
                 realm!!.beginTransaction()
                 realm!!.copyToRealmOrUpdate(productlist)
                 realm!!.commitTransaction()
             } else {
+                productlist.allytips!!.parentid =  productlist.id
+                productlist.enemytips!!.parentid = productlist.id
+                for (i in 0..productlist.skins!!.size - 1) {
+
+                    productlist.skins!![i]!!.imageFull = productlist.skins!![i]!!.imageFull
+                    productlist.skins!![i]!!.imageLoading = productlist.skins!![i]!!.imageLoading
+                }
+                for (i in 0..productlist.spells!!.size - 1) {
+
+                    productlist.spells!![i]!!.image = productlist.spells!![i]!!.image
+                }
+                productlist.allytips!!.parentid =  productlist.id
+                productlist.enemytips!!.parentid =  productlist.id
+
+                productlist.info!!.parentid = productlist.id
+                productlist.stats!!.parentid = productlist.id
+                productlist.partype!!.parentid = productlist.id
                 realm!!.beginTransaction()
                 realm!!.copyToRealmOrUpdate(productlist)
                 realm!!.commitTransaction()
             }
+            MyApplication.getManager()!!.update_onlydata_champion(temp)
             temp++
-            MyApplication.getManager()!!.update_onlydata_champion(listChampion!![temp])
+
             if (temp < listChampion!!.size) {
-                mListChampions!!.getDatachampion(listChampion!![temp])
+                mListChampions!!.getDatachampion(listChampion!![temp].id!!)
                 println(listChampion!![temp])
             } else {
                 MyApplication.getManager()!!.storeOnlylData(true)

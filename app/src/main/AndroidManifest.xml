@@ -19,14 +19,6 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".activity.MainActivity"
-            android:screenOrientation="portrait">
-
-        </activity>
-
-
-
-        <activity
             android:name=".activity.Fullscreen"
             android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen"/>
         <activity
@@ -39,6 +31,8 @@
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
+        <activity android:name=".activity.ChampionListActivity" />
+        <activity android:name=".activity.DetailChampionActivity" />
 
 
     </application>

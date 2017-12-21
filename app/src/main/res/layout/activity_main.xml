@@ -9,7 +9,7 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@color/fullBlack"
+        android:background="@drawable/background"
         android:clipChildren="false"
         android:orientation="vertical">
 
@@ -17,8 +17,6 @@
             android:id="@+id/countries_text"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_alignParentStart="true"
-            android:layout_centerVertical="true"
             android:layout_gravity="center_vertical"
             android:gravity="center_horizontal"
             android:textColor="@color/white"
@@ -27,121 +25,162 @@
 
 
         </TextView>
+
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:orientation="horizontal"
             android:layout_marginTop="10dp"
+            android:baselineAligned="false"
+            android:orientation="horizontal"
             android:weightSum="100">
+
             <LinearLayout
                 android:layout_width="0dp"
                 android:layout_height="match_parent"
-                android:gravity="center"
                 android:layout_weight="30"
+                android:gravity="center"
                 android:orientation="vertical">
+
                 <com.sega.lolproject.customview.CircleImageView
                     android:id="@+id/avattarChamp"
                     android:layout_width="75dp"
                     android:layout_height="75dp" />
-                <LinearLayout
+
+
+                <TextView
+                    android:id="@+id/price"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
-                    <TextView
-                        android:id="@+id/price"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textColor="@color/white"
-                        android:text="6300"/>
-                    <ImageView
-                        android:layout_width="20dp"
-                        android:layout_height="20dp"
-                        android:background="@drawable/tinhhoalam"
+                    android:drawableEnd="@drawable/tinhhoalam"
+                    android:text="6300"
+                    android:textColor="@color/white" />
 
-                        />
-                </LinearLayout>
 
             </LinearLayout>
+
             <LinearLayout
                 android:id="@+id/infoChar"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:gravity="left"
-                android:orientation="vertical"
-                android:layout_weight="70">
+                android:layout_weight="70"
+                android:gravity="start"
+                android:orientation="vertical">
 
-                <com.akexorcist.roundcornerprogressbar.IconRoundCornerProgressBar
-                    android:id="@+id/attack"
-                    android:layout_width="250dp"
-                    android:layout_height="wrap_content"
-                    app:rcBackgroundColor="@color/custom_progress_background"
-                    app:rcBackgroundPadding="2dp"
-                    app:rcIconBackgroundColor="@color/custom_progress_blue_header"
-                    app:rcIconPadding="4dp"
-                    app:rcIconSize="20dp"
-                    app:rcIconSrc="@drawable/attack_icon"
-
-                    app:rcProgressColor="@color/custom_progress_blue_progress"
-                    app:rcRadius="30dp"></com.akexorcist.roundcornerprogressbar.IconRoundCornerProgressBar>
-
-                <com.akexorcist.roundcornerprogressbar.IconRoundCornerProgressBar
-                    android:id="@+id/magic"
-                    android:layout_width="250dp"
-                    android:layout_height="wrap_content"
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="20dp"
                     android:layout_marginTop="5dp"
-                    app:rcBackgroundColor="@color/custom_progress_background"
-                    app:rcBackgroundPadding="2dp"
-                    app:rcIconBackgroundColor="@color/custom_progress_orange_header"
-                    app:rcIconPadding="4dp"
-                    app:rcIconSize="20dp"
-                    app:rcIconSrc="@drawable/magic_icon"
+                    android:orientation="horizontal">
 
-                    app:rcProgressColor="@color/custom_progress_orange_progress"
-                    app:rcRadius="30dp"></com.akexorcist.roundcornerprogressbar.IconRoundCornerProgressBar>
+                    <EditText
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/roundattack_left"
+                        android:drawableEnd="@drawable/attack_icon"
+                        android:drawablePadding="8dp"
+                        android:focusable="false"
+                        android:inputType="none"
+                        android:paddingEnd="5dp" />
 
-                <com.akexorcist.roundcornerprogressbar.IconRoundCornerProgressBar
-                    android:id="@+id/defense"
-                    android:layout_width="250dp"
-                    android:layout_height="wrap_content"
+                    <ProgressBar
+                        android:id="@+id/attack"
+                        style="?android:attr/progressBarStyleHorizontal"
+                        android:layout_width="225dp"
+                        android:layout_height="match_parent"
+                        android:progress="100"
+                        android:progressDrawable="@drawable/roundattack_right" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="20dp"
                     android:layout_marginTop="5dp"
-                    app:rcBackgroundColor="@color/custom_progress_background"
-                    app:rcBackgroundPadding="2dp"
-                    app:rcIconBackgroundColor="@color/custom_progress_blue_header"
-                    app:rcIconPadding="4dp"
-                    app:rcIconSize="20dp"
-                    app:rcIconSrc="@drawable/defense_icon"
+                    android:orientation="horizontal">
 
-                    app:rcProgressColor="@color/custom_progress_blue_progress"
-                    app:rcRadius="30dp"></com.akexorcist.roundcornerprogressbar.IconRoundCornerProgressBar>
+                    <EditText
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/roundmagic_left"
+                        android:drawableEnd="@drawable/magic_icon"
+                        android:drawablePadding="8dp"
+                        android:focusable="false"
+                        android:inputType="none"
+                        android:paddingRight="5dp" />
 
-                <com.akexorcist.roundcornerprogressbar.IconRoundCornerProgressBar
-                    android:id="@+id/difficult"
-                    android:layout_width="250dp"
-                    android:layout_height="wrap_content"
+                    <ProgressBar
+                        android:id="@+id/magic"
+                        style="?android:attr/progressBarStyleHorizontal"
+                        android:layout_width="225dp"
+                        android:layout_height="match_parent"
+                        android:progress="100"
+                        android:progressDrawable="@drawable/roundmagic_right" />
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="20dp"
                     android:layout_marginTop="5dp"
-                    app:rcBackgroundColor="@color/custom_progress_background"
-                    app:rcBackgroundPadding="2dp"
-                    app:rcIconBackgroundColor="@color/custom_progress_green_header"
-                    app:rcIconPadding="4dp"
-                    app:rcIconSize="20dp"
-                    app:rcIconSrc="@drawable/difficult_icon"
+                    android:orientation="horizontal">
 
-                    app:rcProgressColor="@color/custom_progress_green_progress"
-                    app:rcRadius="30dp"></com.akexorcist.roundcornerprogressbar.IconRoundCornerProgressBar>
+                    <EditText
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/rounddefense_left"
+                        android:drawableEnd="@drawable/defense_icon"
+                        android:drawablePadding="8dp"
+                        android:focusable="false"
+                        android:inputType="none"
+                        android:paddingRight="5dp" />
+
+                    <ProgressBar
+                        android:id="@+id/defense"
+                        style="?android:attr/progressBarStyleHorizontal"
+                        android:layout_width="225dp"
+                        android:layout_height="match_parent"
+                        android:progress="100"
+                        android:progressDrawable="@drawable/rounddefense_right" />
+                </LinearLayout>
+
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="20dp"
+                    android:layout_marginTop="5dp"
+                    android:orientation="horizontal">
+
+                    <EditText
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:background="@drawable/rounddifficult_left"
+                        android:drawableEnd="@drawable/difficult_icon"
+                        android:drawablePadding="8dp"
+                        android:focusable="false"
+                        android:inputType="none"
+                        android:paddingRight="5dp" />
+
+                    <ProgressBar
+                        android:id="@+id/difficult"
+                        style="?android:attr/progressBarStyleHorizontal"
+                        android:layout_width="225dp"
+                        android:layout_height="match_parent"
+                        android:progress="100"
+                        android:progressDrawable="@drawable/rounddifficult_right" />
+                </LinearLayout>
             </LinearLayout>
         </LinearLayout>
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:gravity="center"
             android:layout_margin="10dp"
+            android:gravity="center"
             android:orientation="horizontal">
+
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Level: "
-                android:textColor="@color/white"/>
+                android:textColor="@color/white" />
 
             <Spinner
                 android:id="@+id/spinner_level"
@@ -162,24 +201,25 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
                 android:gravity="center_horizontal"
+                android:orientation="horizontal"
                 android:weightSum="100">
 
                 <!--<TextView-->
-                    <!--android:layout_width="0dp"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:layout_weight="20"-->
-                    <!--android:text="Health"-->
-                    <!--android:textColor="@color/white" />-->
+                <!--android:layout_width="0dp"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_weight="20"-->
+                <!--android:text="Health"-->
+                <!--android:textColor="@color/white" />-->
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="10">
+
                     <ImageView
                         android:layout_width="18dp"
                         android:layout_height="18dp"
-                        android:background="@drawable/health"/>
+                        android:background="@drawable/health" />
                 </LinearLayout>
 
 
@@ -193,19 +233,20 @@
                     android:textColor="@color/white" />
 
                 <!--<TextView-->
-                    <!--android:layout_width="0dp"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:layout_weight="20"-->
-                    <!--android:text="Attack Damage"-->
-                    <!--android:textColor="@color/white" />-->
+                <!--android:layout_width="0dp"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_weight="20"-->
+                <!--android:text="Attack Damage"-->
+                <!--android:textColor="@color/white" />-->
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="10">
+
                     <ImageView
                         android:layout_width="18dp"
                         android:layout_height="18dp"
-                        android:background="@drawable/attack_dmg"/>
+                        android:background="@drawable/attack_dmg" />
                 </LinearLayout>
 
                 <TextView
@@ -221,24 +262,25 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
                 android:gravity="center_horizontal"
+                android:orientation="horizontal"
                 android:weightSum="100">
 
                 <!--<TextView-->
-                    <!--android:layout_width="0dp"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:layout_weight="20"-->
-                    <!--android:text="Health Regen."-->
-                    <!--android:textColor="@color/white" />-->
+                <!--android:layout_width="0dp"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_weight="20"-->
+                <!--android:text="Health Regen."-->
+                <!--android:textColor="@color/white" />-->
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="10">
+
                     <ImageView
                         android:layout_width="18dp"
                         android:layout_height="18dp"
-                        android:background="@drawable/health_regen"/>
+                        android:background="@drawable/health_regen" />
                 </LinearLayout>
 
                 <TextView
@@ -251,19 +293,20 @@
                     android:textColor="@color/white" />
 
                 <!--<TextView-->
-                    <!--android:layout_width="0dp"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:layout_weight="20"-->
-                    <!--android:text="Attack Speed"-->
-                    <!--android:textColor="@color/white" />-->
+                <!--android:layout_width="0dp"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_weight="20"-->
+                <!--android:text="Attack Speed"-->
+                <!--android:textColor="@color/white" />-->
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="10">
+
                     <ImageView
                         android:layout_width="18dp"
                         android:layout_height="18dp"
-                        android:background="@drawable/attack_speed"/>
+                        android:background="@drawable/attack_speed" />
                 </LinearLayout>
 
                 <TextView
@@ -279,25 +322,26 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
                 android:gravity="center_horizontal"
+                android:orientation="horizontal"
                 android:weightSum="100">
 
                 <!--<TextView-->
-                    <!--android:id="@+id/tvmana"-->
-                    <!--android:layout_width="0dp"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:layout_weight="20"-->
-                    <!--android:text="Mana"-->
-                    <!--android:textColor="@color/white" />-->
+                <!--android:id="@+id/tvmana"-->
+                <!--android:layout_width="0dp"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_weight="20"-->
+                <!--android:text="Mana"-->
+                <!--android:textColor="@color/white" />-->
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="10">
+
                     <ImageView
                         android:layout_width="18dp"
                         android:layout_height="18dp"
-                        android:background="@drawable/mana"/>
+                        android:background="@drawable/mana" />
                 </LinearLayout>
 
                 <TextView
@@ -310,19 +354,20 @@
                     android:textColor="@color/white" />
 
                 <!--<TextView-->
-                    <!--android:layout_width="0dp"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:layout_weight="20"-->
-                    <!--android:text="Armor"-->
-                    <!--android:textColor="@color/white" />-->
+                <!--android:layout_width="0dp"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_weight="20"-->
+                <!--android:text="Armor"-->
+                <!--android:textColor="@color/white" />-->
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="10">
+
                     <ImageView
                         android:layout_width="18dp"
                         android:layout_height="18dp"
-                        android:background="@drawable/armor"/>
+                        android:background="@drawable/armor" />
                 </LinearLayout>
 
                 <TextView
@@ -339,25 +384,26 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
                 android:gravity="center_horizontal"
+                android:orientation="horizontal"
                 android:weightSum="100">
 
                 <!--<TextView-->
-                    <!--android:id="@+id/tvmanaregen"-->
-                    <!--android:layout_width="0dp"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:layout_weight="20"-->
-                    <!--android:text="Mana Regen."-->
-                    <!--android:textColor="@color/white" />-->
+                <!--android:id="@+id/tvmanaregen"-->
+                <!--android:layout_width="0dp"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_weight="20"-->
+                <!--android:text="Mana Regen."-->
+                <!--android:textColor="@color/white" />-->
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="10">
+
                     <ImageView
                         android:layout_width="18dp"
                         android:layout_height="18dp"
-                        android:background="@drawable/mana_regen"/>
+                        android:background="@drawable/mana_regen" />
                 </LinearLayout>
 
                 <TextView
@@ -371,19 +417,20 @@
                     android:textColor="@color/white" />
 
                 <!--<TextView-->
-                    <!--android:layout_width="0dp"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:layout_weight="20"-->
-                    <!--android:text="Magic Resist."-->
-                    <!--android:textColor="@color/white" />-->
+                <!--android:layout_width="0dp"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_weight="20"-->
+                <!--android:text="Magic Resist."-->
+                <!--android:textColor="@color/white" />-->
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="10">
+
                     <ImageView
                         android:layout_width="18dp"
                         android:layout_height="18dp"
-                        android:background="@drawable/magic_resist"/>
+                        android:background="@drawable/magic_resist" />
                 </LinearLayout>
 
                 <TextView
@@ -400,24 +447,25 @@
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:orientation="horizontal"
                 android:gravity="center_horizontal"
+                android:orientation="horizontal"
                 android:weightSum="100">
 
                 <!--<TextView-->
-                    <!--android:layout_width="0dp"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:layout_weight="20"-->
-                    <!--android:text="Range"-->
-                    <!--android:textColor="@color/white" />-->
+                <!--android:layout_width="0dp"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_weight="20"-->
+                <!--android:text="Range"-->
+                <!--android:textColor="@color/white" />-->
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="10">
+
                     <ImageView
                         android:layout_width="18dp"
                         android:layout_height="18dp"
-                        android:background="@drawable/range"/>
+                        android:background="@drawable/range" />
                 </LinearLayout>
 
                 <TextView
@@ -431,19 +479,20 @@
                     android:textColor="@color/white" />
 
                 <!--<TextView-->
-                    <!--android:layout_width="0dp"-->
-                    <!--android:layout_height="wrap_content"-->
-                    <!--android:layout_weight="20"-->
-                    <!--android:text="Move Speed"-->
-                    <!--android:textColor="@color/white" />-->
+                <!--android:layout_width="0dp"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_weight="20"-->
+                <!--android:text="Move Speed"-->
+                <!--android:textColor="@color/white" />-->
                 <LinearLayout
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
                     android:layout_weight="10">
+
                     <ImageView
                         android:layout_width="18dp"
                         android:layout_height="18dp"
-                        android:background="@drawable/move_speed"/>
+                        android:background="@drawable/move_speed" />
                 </LinearLayout>
 
                 <TextView
@@ -464,26 +513,25 @@
             android:layout_marginTop="30dp">
 
 
-            <FrameLayout
-                android:id="@+id/frameLayout"
-                android:layout_width="85dp"
-                android:layout_height="match_parent"
-                android:layout_alignParentEnd="true"
-                android:layout_centerVertical="true"
-                android:background="@drawable/temperature_background">
+        <FrameLayout
+            android:id="@+id/frameLayout"
+            android:layout_width="85dp"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_centerVertical="true"
+            android:background="@drawable/temperature_background">
                 <!--<ImageView-->
                 <!--android:layout_width="wrap_content"-->
                 <!--android:layout_height="wrap_content"-->
                 <!--android:background="@drawable/rp_icon"/>-->
                 <TextSwitcher
-
-                    android:id="@+id/ts_temperature"
+                    android:id="@+id/ts_price"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_gravity="center"
-                    android:textColor="@color/white" />
-
-            </FrameLayout>
+                    android:textColor="@color/white">
+                </TextSwitcher>
+        </FrameLayout>
 
         </RelativeLayout>
 
@@ -517,7 +565,7 @@
                 android:layout_height="wrap_content"
                 android:layout_gravity="center_vertical"
                 android:layout_marginStart="@dimen/left_offset"
-                android:textColor="@color/white" />
+                android:textColor="@color/white"></TextSwitcher>
 
         </FrameLayout>
 
@@ -533,28 +581,20 @@
             <!--android:layout_height="match_parent"/>-->
 
 
-            <TextSwitcher
-                android:id="@+id/ts_description"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="10dp"
-                android:layout_marginStart="@dimen/left_offset"
-                android:textColor="@color/white" />
-
             <FrameLayout
                 android:id="@+id/num"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/ts_description"
                 android:layout_marginTop="10dp">
 
                 <ImageView
+                    android:id="@+id/type_skin"
                     android:layout_width="13dp"
                     android:layout_height="13dp"
                     android:layout_gravity="center_vertical"
                     android:layout_marginStart="30dp"
                     android:scaleType="fitCenter"
-                    android:src="@drawable/clock" />
+                    android:src="@drawable/ultimate_skin" />
 
                 <TextSwitcher
                     android:id="@+id/ts_clock"
@@ -566,12 +606,22 @@
 
             </FrameLayout>
 
+            <View
+                android:id="@+id/gradient"
+                android:layout_width="match_parent"
+                android:layout_height="35dp"
+                android:layout_below="@id/num"
+                android:layout_marginTop="5dp"
+                android:background="@drawable/gradient_map"
+                android:orientation="horizontal" />
+
             <com.google.android.youtube.player.YouTubePlayerView
                 android:id="@+id/youtube_player_view"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_below="@id/num"
-                android:layout_marginTop="20dp" />
+                android:layout_below="@id/gradient"
+
+                />
         </RelativeLayout>
 
     </LinearLayout>

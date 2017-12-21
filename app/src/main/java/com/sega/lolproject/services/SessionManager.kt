@@ -52,27 +52,27 @@ class SessionManager(private val context: Context) {
 
     }
 
-    fun update_fulldata_champion(data: String) {
+    fun update_fulldata_champion(data: Int) {
         // Storing login value as TRUE
-        editor.putString(KEY_FULLDATA_CHAMPION, data)
+        editor.putInt(KEY_FULLDATA_CHAMPION, data)
         // commit changes
         editor.commit()
     }
-    fun getResumeFull(): String {
+    fun getResumeFull(): Int {
         // Storing login value as TRUE
-        return pref.getString(KEY_FULLDATA_CHAMPION,"Aatrox")
+        return pref.getInt(KEY_FULLDATA_CHAMPION,0)
         // commit changes
 
     }
-    fun update_onlydata_champion(data: String) {
+    fun update_onlydata_champion(data: Int) {
         // Storing login value as TRUE
-        editor.putString(KEY_ONLYDATA_CHAMPION, data)
+        editor.putInt(KEY_ONLYDATA_CHAMPION, data)
         // commit changes
         editor.commit()
     }
-    fun getResumeOnly(): String {
+    fun getResumeOnly(): Int {
         // Storing login value as TRUE
-        return pref.getString(KEY_ONLYDATA_CHAMPION,"Aatrox")
+        return pref.getInt(KEY_ONLYDATA_CHAMPION,0)
         // commit changes
 
     }

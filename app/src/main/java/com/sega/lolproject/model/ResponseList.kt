@@ -7,5 +7,5 @@ package com.sega.lolproject.model
 
 class ResponseList {
     val status : Int?=null
-    var listchampion : ArrayList<String>? = ArrayList()
+    var listchampion : ArrayList<Champion>? = ArrayList()
 }

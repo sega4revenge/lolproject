@@ -14,6 +14,7 @@ open class Champion : RealmObject() {
    var id : String ?= null
    var key : String ? = null
    var name : String ? = null
+   var price : String? = null
    var title    : Title ? = Title()
    var imageAvatar : String ?= null
    var skins : RealmList<Skin>? = null

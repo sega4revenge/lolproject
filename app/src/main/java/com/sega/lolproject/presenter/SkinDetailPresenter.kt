@@ -158,7 +158,7 @@ class SkinDetailPresenter(view: skinsDetail) {
         fun setErrorNotFound()
         fun setErrorMessage(errorMessage: String)
         fun getDetail(productlist: Champion)
-        fun getListChampion(productlist: ArrayList<String>)
+        fun getListChampion(productlist: ArrayList<Champion>)
 
 
     }

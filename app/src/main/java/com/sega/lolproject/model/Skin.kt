@@ -1,11 +1,13 @@
 package com.sega.lolproject.model
 
 import io.realm.RealmObject
+import io.realm.annotations.PrimaryKey
 
 /**
  * Created by sega4 on 06/12/2017.
  */
 open class Skin:  RealmObject() {
+    @PrimaryKey
     var id: String? = null
     var num: String? = null
     var name: Name? = Name()

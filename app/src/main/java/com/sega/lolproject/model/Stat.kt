@@ -1,11 +1,14 @@
 package com.sega.lolproject.model
 
 import io.realm.RealmObject
+import io.realm.annotations.PrimaryKey
 
 /**
  * Created by sega4 on 06/12/2017.
  */
 open class Stat() : RealmObject() {
+    @PrimaryKey
+    var parentid : String?=null
     var armor : String? = null
     var armorperlevel : String? = null
     var attackdamage : String? = null

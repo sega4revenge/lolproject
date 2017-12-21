@@ -8,8 +8,9 @@ import android.support.v4.app.Fragment;
 
 import com.sega.lolproject.model.Champion;
 
+import java.util.ArrayList;
+
 import io.realm.Realm;
-import io.realm.RealmResults;
 
 
 public class RealmController {
@@ -71,9 +72,9 @@ public class RealmController {
 
 
     //find all objects in the Champion.class
-    public RealmResults<Champion> getChampions() {
+    public ArrayList<Champion> getChampions() {
 
-        return realm.where(Champion.class).findAll();
+        return (ArrayList<Champion>) realm.copyFromRealm(realm.where(Champion.class).findAll());
     }
 
     //query a single item with the given id

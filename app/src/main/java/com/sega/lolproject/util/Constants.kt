@@ -7,6 +7,6 @@ package com.sega.lolproject.util
 internal object Constants {
 
     val BASE_URL = "http://45.77.36.109:8000/api/v2/"
-    val BUNDLE_IMAGE_ID = "ID"
+    val URL_AVATAR = "ID"
 
 }

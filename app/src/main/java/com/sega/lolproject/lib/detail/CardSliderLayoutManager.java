@@ -29,7 +29,7 @@ public class CardSliderLayoutManager extends RecyclerView.LayoutManager
         implements RecyclerView.SmoothScroller.ScrollVectorProvider {
 
     private static final int DEFAULT_ACTIVE_CARD_LEFT_OFFSET = 50;
-    private static final int DEFAULT_CARD_WIDTH = 115;
+    private static final int DEFAULT_CARD_WIDTH = 123;
     private static final int DEFAULT_CARDS_GAP = 12;
     private static final int LEFT_CARD_COUNT = 2;
 

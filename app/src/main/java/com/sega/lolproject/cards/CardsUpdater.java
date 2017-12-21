@@ -22,13 +22,15 @@ public class CardsUpdater extends DefaultViewUpdater {
 
         if (position < 0) {
             final float alpha = ViewCompat.getAlpha(view);
-            ViewCompat.setAlpha(view, 1f);
+            ViewCompat.setAlpha(view, 0.3f + alpha);
+      /*      ViewCompat.setAlpha(view, 1f);
             ViewCompat.setAlpha(alphaView, 0.9f - alpha);
-            ViewCompat.setAlpha(imageView, 0.3f + alpha);
+            ViewCompat.setAlpha(imageView,0.3f + alpha);*/
         } else {
             ViewCompat.setAlpha(alphaView, 0f);
             ViewCompat.setAlpha(imageView, 1f);
         }
+
 
         if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
             final CardSliderLayoutManager lm =  getLayoutManager();
