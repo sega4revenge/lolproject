@@ -79,6 +79,7 @@ class DetailChampionActivity : YouTubeBaseActivity(), YouTubePlayer.OnInitialize
     var linkSkin : String ?= null
     private var mListChampions: SkinDetailPresenter?=null
 
+    var querry: String? = ""
 
     private var sliderAdapter  : SliderAdapter?=null
 
@@ -101,8 +102,13 @@ class DetailChampionActivity : YouTubeBaseActivity(), YouTubePlayer.OnInitialize
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
         mListChampions = SkinDetailPresenter(this)
+        window.setBackgroundDrawableResource(R.drawable.background)
         if(MyApplication.getManager()!!.checkFullData())
-        champion =  RealmController.with(this).getChampion(intent.getStringExtra("id"))
+        {
+            champion =  RealmController.with(this).getChampion(intent.getStringExtra("id"))
+            initalize()
+        }
+
         else
         {
             mListChampions!!.getDatachampion(intent.getStringExtra("id"))
@@ -110,6 +116,46 @@ class DetailChampionActivity : YouTubeBaseActivity(), YouTubePlayer.OnInitialize
 
     }
     fun initalize(){
+        if(MyApplication.getManager()!!.checkFullData()){
+            passive.setImageBitmap(MediaStore.Images.Media.getBitmap(contentResolver, Uri.parse(champion!!.passive?.imagePassive)))
+            skillQ.setImageBitmap(MediaStore.Images.Media.getBitmap(contentResolver, Uri.parse(champion!!.spells!![0]?.image)))
+            skillW.setImageBitmap(MediaStore.Images.Media.getBitmap(contentResolver, Uri.parse(champion!!.spells!![1]?.image)))
+            skillE.setImageBitmap(MediaStore.Images.Media.getBitmap(contentResolver, Uri.parse(champion!!.spells!![2]?.image)))
+            skillR.setImageBitmap(MediaStore.Images.Media.getBitmap(contentResolver, Uri.parse(champion!!.spells!![3]?.image)))
+
+        }
+        else {
+            Glide.with(this)
+                    .load(champion!!.passive?.imagePassive)
+                    .apply(options)
+                    .into(passive)
+            Glide.with(this)
+                    .load(champion!!.spells!![0]?.image)
+                    .apply(options)
+                    .into(skillQ)
+            Glide.with(this)
+                    .load(champion!!.spells!![1]?.image)
+                    .apply(options)
+                    .into(skillW)
+            Glide.with(this)
+                    .load(champion!!.spells!![2]?.image)
+                    .apply(options)
+                    .into(skillE)
+            Glide.with(this)
+                    .load(champion!!.spells!![3]?.image)
+                    .apply(options)
+                    .into(skillR)
+
+        }
+
+        querry = "Passive"
+        passive.background = resources.getDrawable(R.drawable.round)
+        skillQ.setBackgroundColor(resources.getColor(R.color.transparent))
+        skillW.setBackgroundColor(resources.getColor(R.color.transparent))
+        skillE.setBackgroundColor(resources.getColor(R.color.transparent))
+        skillR.setBackgroundColor(resources.getColor(R.color.transparent))
+        setSkill(querry!!,0)
+
         attack.progress = champion!!.info?.attack!!.toInt() * 10
 
         magic.progress = champion!!.info?.magic!!.toInt() * 10
@@ -152,7 +198,7 @@ class DetailChampionActivity : YouTubeBaseActivity(), YouTubePlayer.OnInitialize
         countries_text!!.typeface = Typeface.createFromAsset(assets, "open-sans-extrabold.ttf")
         initRecyclerView()
         initSwitchers()
-
+        initButtonFilter()
     }
     fun getFullStat118(champion : Champion) {
                 health.text = champion.stats?.hp + " - " + getStat("18", champion.stats?.hp!!, champion.stats?.hpperlevel!!)
@@ -232,8 +278,89 @@ class DetailChampionActivity : YouTubeBaseActivity(), YouTubePlayer.OnInitialize
 
 
     }
+    fun setSkill(querry : String, pos: Int){
+        if(querry.equals("Passive")){
+            name_skill.text = champion?.passive?.name?.vn
+            description_skill.text = champion?.passive?.description?.vn
+        }
+        else {
+            name_skill.text = champion?.spells!![pos]?.name?.vn
+            description_skill.text = champion?.spells!![pos]?.description?.vn
+        }
+    }
+    private fun initButtonFilter() {
+        passive.setOnClickListener {
+//            if (querry.equals("Passive")) {
+//                querry = ""
+//                passive.setBackgroundColor(resources.getColor(R.color.transparent))
+//            } else {
+                querry = "Passive"
+                passive.background = resources.getDrawable(R.drawable.round)
+                skillQ.setBackgroundColor(resources.getColor(R.color.transparent))
+                skillW.setBackgroundColor(resources.getColor(R.color.transparent))
+                skillE.setBackgroundColor(resources.getColor(R.color.transparent))
+                skillR.setBackgroundColor(resources.getColor(R.color.transparent))
+//            }
+            setSkill(querry!!,0)
+        }
+        skillQ.setOnClickListener {
+//            if (querry.equals("SkillQ")) {
+//                querry = ""
+//                skillQ.setBackgroundColor(resources.getColor(R.color.transparent))
+//            } else {
+                querry = "SkillQ"
+                skillQ.background = resources.getDrawable(R.drawable.round)
+                passive.setBackgroundColor(resources.getColor(R.color.transparent))
+                skillW.setBackgroundColor(resources.getColor(R.color.transparent))
+                skillE.setBackgroundColor(resources.getColor(R.color.transparent))
+                skillR.setBackgroundColor(resources.getColor(R.color.transparent))
 
-
+//            }
+            setSkill(querry!!,0)
+        }
+        skillW.setOnClickListener {
+//            if (querry.equals("SkillW")) {
+//                querry = ""
+//                skillW.setBackgroundColor(resources.getColor(R.color.transparent))
+//            } else {
+                querry = "SkillW"
+                passive.setBackgroundColor(resources.getColor(R.color.transparent))
+                skillQ.setBackgroundColor(resources.getColor(R.color.transparent))
+                skillW.background = resources.getDrawable(R.drawable.round)
+                skillE.setBackgroundColor(resources.getColor(R.color.transparent))
+                skillR.setBackgroundColor(resources.getColor(R.color.transparent))
+//            }
+            setSkill(querry!!,1)
+        }
+        skillE.setOnClickListener {
+//            if (querry.equals("SkillE")) {
+//                querry = ""
+//                skillE.setBackgroundColor(resources.getColor(R.color.transparent))
+//            } else {
+                querry = "SkillE"
+                passive.setBackgroundColor(resources.getColor(R.color.transparent))
+                skillQ.setBackgroundColor(resources.getColor(R.color.transparent))
+                skillW.setBackgroundColor(resources.getColor(R.color.transparent))
+                skillE.background = resources.getDrawable(R.drawable.round)
+                skillR.setBackgroundColor(resources.getColor(R.color.transparent))
+//            }
+            setSkill(querry!!,2)
+        }
+        skillR.setOnClickListener {
+//            if (querry.equals("SkillR")) {
+//                querry = ""
+//                skillR.setBackgroundColor(resources.getColor(R.color.transparent))
+//            } else {
+                querry = "SkillR"
+                passive.setBackgroundColor(resources.getColor(R.color.transparent))
+                skillQ.setBackgroundColor(resources.getColor(R.color.transparent))
+                skillW.setBackgroundColor(resources.getColor(R.color.transparent))
+                skillE.setBackgroundColor(resources.getColor(R.color.transparent))
+                skillR.background = resources.getDrawable(R.drawable.round)
+//            }
+            setSkill(querry!!,3)
+        }
+    }
 
 
 

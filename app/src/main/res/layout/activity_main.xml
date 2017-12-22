@@ -9,7 +9,6 @@
     <LinearLayout
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:background="@drawable/background"
         android:clipChildren="false"
         android:orientation="vertical">
 
@@ -505,7 +504,125 @@
 
                     android:textColor="@color/white" />
             </LinearLayout>
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:focusableInTouchMode="true"
+                android:layout_marginTop="30dp"
+                android:orientation="horizontal"
+                android:padding="10dp"
+                android:weightSum="100">
+                <com.sega.lolproject.customview.CircleImageView
+                    android:id="@+id/passive"
+                    android:layout_width="0dp"
+                    android:layout_height="75dp"
+                    android:layout_weight="20"
+                    android:layout_marginStart="10dp"
+                    android:paddingStart="5dp"
+                    android:paddingEnd="5dp"
+                    android:background="@color/transparent"
+                    android:layout_gravity="center"
+                    android:src="@drawable/marksman_icon"
+                    />
+                <com.sega.lolproject.customview.CircleImageView
+                    android:id="@+id/skillQ"
+                    android:layout_width="0dp"
+                    android:layout_height="70dp"
+                    android:layout_weight="20"
+                    android:paddingStart="5dp"
+                    android:paddingEnd="5dp"
+                    android:background="@color/transparent"
+                    android:layout_gravity="center"
+                    android:src="@drawable/mage_icon"
+                    />
+                <com.sega.lolproject.customview.CircleImageView
+                    android:id="@+id/skillW"
+                    android:layout_width="0dp"
+                    android:layout_height="70dp"
+                    android:layout_weight="20"
+                    android:paddingStart="5dp"
+                    android:paddingEnd="5dp"
+                    android:background="@color/transparent"
+                    android:layout_gravity="center"
+                    android:src="@drawable/fighter_icon"
+                    />
+                <com.sega.lolproject.customview.CircleImageView
+                    android:id="@+id/skillE"
+                    android:layout_width="0dp"
+                    android:layout_height="70dp"
+                    android:layout_weight="20"
+                    android:paddingStart="5dp"
+                    android:paddingEnd="5dp"
+                    android:background="@color/transparent"
+                    android:layout_gravity="center"
+                    android:src="@drawable/tank_icon"
+                    />
+                <com.sega.lolproject.customview.CircleImageView
+                    android:id="@+id/skillR"
+                    android:layout_width="0dp"
+                    android:layout_height="70dp"
+                    android:layout_weight="20"
+                    android:paddingStart="5dp"
+                    android:paddingEnd="5dp"
+                    android:background="@color/transparent"
+                    android:layout_gravity="center"
+                    android:src="@drawable/assasin_icon"
+                    />
+            </LinearLayout>
+            <LinearLayout
+                android:id="@+id/info_skill"
+                android:layout_width="match_parent"
+                android:paddingTop="15dp"
+                android:paddingBottom="15dp"
+                android:layout_height="wrap_content"
+                android:orientation="vertical">
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:paddingStart="10dp"
+                    android:paddingEnd="10dp"
+                    android:weightSum="100"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="30"
+                        android:textColor="@color/white"
+                        android:text="Tên :"/>
+                    <TextView
+                        android:id="@+id/name_skill"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="70"
+                        android:textStyle="bold"
+                        android:textColor="@color/white"
+                        android:text="ABCXYZZZZZZZZZZZZZZZ"/>
+                </LinearLayout>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:weightSum="100"
+                    android:padding="10dp"
+                    android:orientation="horizontal">
+                    <TextView
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="30"
+                        android:textColor="@color/white"
+                        android:text="Mô tả :"/>
+                    <TextView
+                        android:id="@+id/description_skill"
+                        android:layout_width="0dp"
+                        android:layout_height="wrap_content"
+                        android:layout_weight="70"
+                        android:textColor="@color/white"
+                        android:text="AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"/>
+                </LinearLayout>
+            </LinearLayout>
         </LinearLayout>
+
+
 
         <RelativeLayout
             android:layout_width="match_parent"
