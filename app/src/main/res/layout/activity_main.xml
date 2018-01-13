@@ -40,7 +40,7 @@
                 android:gravity="center"
                 android:orientation="vertical">
 
-                <com.sega.lolproject.customview.CircleImageView
+                <com.nightshade.lolproject.customview.CircleImageView
                     android:id="@+id/avattarChamp"
                     android:layout_width="75dp"
                     android:layout_height="75dp" />
@@ -512,7 +512,7 @@
                 android:orientation="horizontal"
                 android:padding="10dp"
                 android:weightSum="100">
-                <com.sega.lolproject.customview.CircleImageView
+                <com.nightshade.lolproject.customview.CircleImageView
                     android:id="@+id/passive"
                     android:layout_width="0dp"
                     android:layout_height="75dp"
@@ -524,7 +524,7 @@
                     android:layout_gravity="center"
                     android:src="@drawable/marksman_icon"
                     />
-                <com.sega.lolproject.customview.CircleImageView
+                <com.nightshade.lolproject.customview.CircleImageView
                     android:id="@+id/skillQ"
                     android:layout_width="0dp"
                     android:layout_height="70dp"
@@ -535,7 +535,7 @@
                     android:layout_gravity="center"
                     android:src="@drawable/mage_icon"
                     />
-                <com.sega.lolproject.customview.CircleImageView
+                <com.nightshade.lolproject.customview.CircleImageView
                     android:id="@+id/skillW"
                     android:layout_width="0dp"
                     android:layout_height="70dp"
@@ -546,7 +546,7 @@
                     android:layout_gravity="center"
                     android:src="@drawable/fighter_icon"
                     />
-                <com.sega.lolproject.customview.CircleImageView
+                <com.nightshade.lolproject.customview.CircleImageView
                     android:id="@+id/skillE"
                     android:layout_width="0dp"
                     android:layout_height="70dp"
@@ -557,7 +557,7 @@
                     android:layout_gravity="center"
                     android:src="@drawable/tank_icon"
                     />
-                <com.sega.lolproject.customview.CircleImageView
+                <com.nightshade.lolproject.customview.CircleImageView
                     android:id="@+id/skillR"
                     android:layout_width="0dp"
                     android:layout_height="70dp"
@@ -588,7 +588,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="30"
                         android:textColor="@color/white"
-                        android:text="Tên :"/>
+                        android:text="Name :"/>
                     <TextView
                         android:id="@+id/name_skill"
                         android:layout_width="0dp"
@@ -610,7 +610,7 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="30"
                         android:textColor="@color/white"
-                        android:text="Mô tả :"/>
+                        android:text="Description:"/>
                     <TextView
                         android:id="@+id/description_skill"
                         android:layout_width="0dp"
@@ -660,8 +660,8 @@
             android:layout_marginTop="18dp"
             android:clipChildren="false"
             android:overScrollMode="never"
-            app:layoutManager="com.sega.lolproject.lib.detail.CardSliderLayoutManager"
-            app:viewUpdater="com.sega.lolproject.cards.CardsUpdater" />
+            app:layoutManager="com.nightshade.lolproject.lib.detail.CardSliderLayoutManager"
+            app:viewUpdater="com.nightshade.lolproject.cards.CardsUpdater" />
 
         <FrameLayout
             android:layout_width="match_parent"
@@ -702,7 +702,8 @@
                 android:id="@+id/num"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="10dp">
+                android:layout_marginTop="10dp"
+                android:visibility="gone">
 
                 <ImageView
                     android:id="@+id/type_skin"

@@ -7,11 +7,11 @@ apply plugin: 'realm-android'
 android {
     compileSdkVersion 26
     defaultConfig {
-        applicationId "com.sega.lolproject"
+        applicationId "com.nightshade.lolproject"
         minSdkVersion 19
         targetSdkVersion 26
-        versionCode 1
-        versionName "1.0"
+        versionCode 4
+        versionName "1.03"
         testInstrumentationRunner "android.support.test.runner.AndroidJUnitRunner"
     }
     buildTypes {
@@ -45,6 +45,7 @@ dependencies {
     implementation 'com.amitshekhar.android:rx2-android-networking:1.0.0'
     implementation 'com.lapism:searchview:5.0.0-alpha7'
     implementation 'com.google.android:flexbox:0.3.1'
+    implementation 'com.google.android.gms:play-services-ads:11.0.4'
 
 }
 apply plugin: 'com.getkeepsafe.dexcount'

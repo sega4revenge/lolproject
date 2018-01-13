@@ -1,17 +1,18 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.sega.lolproject">
+    package="com.nightshade.lolproject">
 
     <uses-permission
         android:name="android.permission.AUTHENTICATE_ACCOUNTS"
         android:maxSdkVersion="22" />
-    <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.INTERNET"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
     <uses-permission android:name="android.permission.WRITE_SYNC_SETTINGS"/>
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
     <uses-permission android:name="android.permission.WRITE_EXTERNAL_STORAGE" />
 
     <application
-        android:name=".MyApplication"
+        android:name="com.nightshade.lolproject.MyApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -19,22 +20,25 @@
         android:supportsRtl="true"
         android:theme="@style/AppTheme">
         <activity
-            android:name=".activity.Fullscreen"
+            android:name="com.nightshade.lolproject.activity.Fullscreen"
             android:theme="@android:style/Theme.Black.NoTitleBar.Fullscreen"/>
         <activity
-            android:name=".activity.DetailsActivity"
+            android:name="com.nightshade.lolproject.activity.DetailsActivity"
             android:screenOrientation="portrait" />
-        <activity android:name=".activity.BlankActivity">
+        <activity android:name="com.nightshade.lolproject.activity.BlankActivity">
+        </activity>
+        <activity android:name="com.nightshade.lolproject.activity.ChampionListActivity" >
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-        <activity android:name=".activity.ChampionListActivity" />
-        <activity android:name=".activity.DetailChampionActivity" />
+        <activity android:name="com.nightshade.lolproject.activity.DetailChampionActivity" />
 
-
+        <activity android:name="com.google.android.gms.ads.AdActivity"
+            android:configChanges="keyboard|keyboardHidden|orientation|screenLayout|uiMode|screenSize|smallestScreenSize"
+            android:theme="@android:style/Theme.Translucent" />
     </application>
 
 </manifest>
