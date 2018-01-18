@@ -31,6 +31,7 @@ import com.nightshade.lolproject.presenter.SkinDetailPresenter
 import com.nightshade.lolproject.services.RealmController
 import com.nightshade.lolproject.util.DecodeBitmapTask
 import kotlinx.android.synthetic.main.activity_main.*
+import java.util.*
 
 /**
  * Created by sega4 on 18/12/2017.
@@ -147,7 +148,7 @@ class DetailChampionActivity : YouTubeBaseActivity(), YouTubePlayer.OnInitialize
                     .into(skillR)
 
         }
-
+        price.text = champion!!.price
         querry = "Passive"
         passive.background = resources.getDrawable(R.drawable.round)
         skillQ.setBackgroundColor(resources.getColor(R.color.transparent))
@@ -194,7 +195,10 @@ class DetailChampionActivity : YouTubeBaseActivity(), YouTubePlayer.OnInitialize
                     .load(champion!!.imageAvatar)
                     .apply(options)
                     .into(avattarChamp)
-        countries_text.text =    (champion!!.name + " - " + champion!!.title!!.en)
+        if(Locale.getDefault().displayLanguage =="Tiếng Việt")
+        countries_text.text =    (champion!!.name + " - " + champion!!.title!!.vn)
+        else
+            countries_text.text =    (champion!!.name + " - " + champion!!.title!!.en)
         countries_text!!.typeface = Typeface.createFromAsset(assets, "open-sans-extrabold.ttf")
         initRecyclerView()
         initSwitchers()
@@ -264,8 +268,10 @@ class DetailChampionActivity : YouTubeBaseActivity(), YouTubePlayer.OnInitialize
 
         placeSwitcher = findViewById(R.id.ts_place) as TextSwitcher
         placeSwitcher!!.setFactory(TextViewFactory(R.style.PlaceTextView, false))
-        placeSwitcher!!.setCurrentText(champion!!.skins!![0]!!.name!!.en)
-
+        if(Locale.getDefault().displayLanguage =="Tiếng Việt")
+        placeSwitcher!!.setCurrentText(champion!!.skins!![0]!!.name!!.vn)
+        else
+            placeSwitcher!!.setCurrentText(champion!!.skins!![0]!!.name!!.en)
         clockSwitcher = findViewById(R.id.ts_clock) as TextSwitcher
         clockSwitcher!!.setFactory(TextViewFactory(R.style.ClockTextView, false))
         clockSwitcher!!.setCurrentText(champion!!.skins!![0]!!.num)
@@ -280,12 +286,29 @@ class DetailChampionActivity : YouTubeBaseActivity(), YouTubePlayer.OnInitialize
     }
     fun setSkill(querry : String, pos: Int){
         if(querry.equals("Passive")){
-            name_skill.text = champion?.passive?.name?.en
-            description_skill.text = champion?.passive?.description?.en
+            if(Locale.getDefault().displayLanguage =="Tiếng Việt")
+            {
+                name_skill.text = champion?.passive?.name?.vn
+                description_skill.text = champion?.passive?.description?.vn
+            }
+                else
+            {
+                name_skill.text = champion?.passive?.name?.en
+                description_skill.text = champion?.passive?.description?.en
+            }
         }
         else {
-            name_skill.text = champion?.spells!![pos]?.name?.en
-            description_skill.text = champion?.spells!![pos]?.description?.en
+            if(Locale.getDefault().displayLanguage =="Tiếng Việt")
+            {
+                name_skill.text = champion?.spells!![pos]?.name?.vn
+                description_skill.text = champion?.spells!![pos]?.description?.vn
+            }
+            else
+            {
+                name_skill.text = champion?.spells!![pos]?.name?.en
+                description_skill.text = champion?.spells!![pos]?.description?.en
+            }
+
         }
     }
     private fun initButtonFilter() {
@@ -395,7 +418,10 @@ class DetailChampionActivity : YouTubeBaseActivity(), YouTubePlayer.OnInitialize
 
         placeSwitcher!!.setInAnimation(this@DetailChampionActivity, animV[0])
         placeSwitcher!!.setOutAnimation(this@DetailChampionActivity, animV[1])
-        placeSwitcher!!.setText(champion!!.skins!![pos % champion!!.skins!!.size]!!.name!!.en)
+        if(Locale.getDefault().displayLanguage =="Tiếng Việt")
+        placeSwitcher!!.setText(champion!!.skins!![pos % champion!!.skins!!.size]!!.name!!.vn)
+        else
+            placeSwitcher!!.setText(champion!!.skins!![pos % champion!!.skins!!.size]!!.name!!.en)
       /*  clockSwitcher!!.setInAnimation(this@DetailChampionActivity, animV[0])
         clockSwitcher!!.setOutAnimation(this@DetailChampionActivity, animV[1])
         clockSwitcher!!.setText("Tối thượng")*/
