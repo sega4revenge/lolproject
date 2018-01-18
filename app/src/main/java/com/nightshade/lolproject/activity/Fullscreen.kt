@@ -11,6 +11,7 @@ import android.graphics.PointF
 import android.os.Bundle
 import android.support.v4.app.ActivityCompat
 import android.support.v4.view.PagerAdapter
+import android.support.v4.view.ViewPager
 import android.util.Log
 import android.view.MotionEvent
 import android.view.View
@@ -127,7 +128,7 @@ class Fullscreen : Activity(), View.OnTouchListener {
         }
 
         override fun instantiateItem(container: ViewGroup, position: Int): View {
-            Log.e("Imageeeeee", position.toString())
+
 
             setWallpaper.setOnClickListener {
                 //            val permission = ActivityCompat.checkSelfPermission(applicationContext, Manifest.permission.SET_WALLPAPER )
@@ -234,6 +235,20 @@ class Fullscreen : Activity(), View.OnTouchListener {
 
         mViewPager.adapter = TouchImageAdapter()
         mViewPager.currentItem = pos
+        mViewPager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
+            override fun onPageScrolled(position: Int, positionOffset: Float, positionOffsetPixels: Int) {
+
+            }
+
+            override fun onPageSelected(position: Int) {
+                Log.e("Imageeeeee", position.toString())
+            }
+
+            override fun onPageScrollStateChanged(state: Int) {
+
+            }
+        })
+
         val returnIntent = Intent()
         setResult(Activity.RESULT_OK, returnIntent)
     }
