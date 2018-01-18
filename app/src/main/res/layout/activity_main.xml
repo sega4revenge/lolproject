@@ -51,7 +51,6 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:drawableEnd="@drawable/tinhhoalam"
-                    android:text="6300"
                     android:textColor="@color/white" />
 
 
@@ -228,7 +227,6 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="40"
                     android:gravity="center"
-                    android:text="222"
                     android:textColor="@color/white" />
 
                 <!--<TextView-->
@@ -254,7 +252,6 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="30"
                     android:gravity="center"
-                    android:text="4444"
                     android:textColor="@color/white" />
             </LinearLayout>
 
@@ -288,7 +285,6 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="40"
                     android:gravity="center"
-                    android:text="222"
                     android:textColor="@color/white" />
 
                 <!--<TextView-->
@@ -314,7 +310,6 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="30"
                     android:gravity="center"
-                    android:text="4444"
                     android:textColor="@color/white" />
             </LinearLayout>
 
@@ -349,7 +344,6 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="40"
                     android:gravity="center"
-                    android:text="222"
                     android:textColor="@color/white" />
 
                 <!--<TextView-->
@@ -375,8 +369,6 @@
                     android:layout_height="match_parent"
                     android:layout_weight="30"
                     android:gravity="center"
-                    android:text="4444"
-
                     android:textColor="@color/white" />
             </LinearLayout>
 
@@ -411,8 +403,6 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="40"
                     android:gravity="center"
-                    android:text="222"
-
                     android:textColor="@color/white" />
 
                 <!--<TextView-->
@@ -438,8 +428,6 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="30"
                     android:gravity="center"
-                    android:text="4444"
-
                     android:textColor="@color/white" />
             </LinearLayout>
 
@@ -473,8 +461,6 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="40"
                     android:gravity="center"
-                    android:text="222"
-
                     android:textColor="@color/white" />
 
                 <!--<TextView-->
@@ -500,8 +486,6 @@
                     android:layout_height="wrap_content"
                     android:layout_weight="30"
                     android:gravity="center"
-                    android:text="4444"
-
                     android:textColor="@color/white" />
             </LinearLayout>
             <LinearLayout
@@ -588,15 +572,14 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="30"
                         android:textColor="@color/white"
-                        android:text="Name :"/>
+                        android:text="@string/name_skill"/>
                     <TextView
                         android:id="@+id/name_skill"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="70"
                         android:textStyle="bold"
-                        android:textColor="@color/white"
-                        android:text="ABCXYZZZZZZZZZZZZZZZ"/>
+                        android:textColor="@color/white"/>
                 </LinearLayout>
 
                 <LinearLayout
@@ -610,14 +593,13 @@
                         android:layout_height="wrap_content"
                         android:layout_weight="30"
                         android:textColor="@color/white"
-                        android:text="Description:"/>
+                        android:text="@string/description_skill"/>
                     <TextView
                         android:id="@+id/description_skill"
                         android:layout_width="0dp"
                         android:layout_height="wrap_content"
                         android:layout_weight="70"
-                        android:textColor="@color/white"
-                        android:text="AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA"/>
+                        android:textColor="@color/white"/>
                 </LinearLayout>
             </LinearLayout>
         </LinearLayout>

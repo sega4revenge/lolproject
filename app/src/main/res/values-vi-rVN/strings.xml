@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="name_skill">Tên :</string>
+    <string name="description_skill">Mô tả :</string>
+    <string name="per_deni">Quyền truy cập bị từ chối</string>
+    <string name="per_turnon">Nếu bạn từ chối truy cập, bạn không thể sử dụng dịch vụ
+       Vui lòng bật quyền truy cập ở [Setting] > [Permission]</string>
+</resources>

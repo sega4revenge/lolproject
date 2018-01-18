@@ -2,8 +2,10 @@ package com.nightshade.lolproject.activity
 
 import android.Manifest
 import android.app.Activity
+import android.app.WallpaperManager
 import android.content.Intent
 import android.content.pm.PackageManager
+import android.graphics.Bitmap
 import android.graphics.Matrix
 import android.graphics.PointF
 import android.os.Bundle
@@ -15,10 +17,22 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ImageView
 import android.widget.LinearLayout
+import android.widget.Toast
+import com.bumptech.glide.Glide
+import com.bumptech.glide.Priority
+import com.bumptech.glide.load.engine.DiskCacheStrategy
+import com.bumptech.glide.request.RequestOptions
+import com.bumptech.glide.request.target.SimpleTarget
+import com.bumptech.glide.request.transition.Transition
+import com.gun0912.tedpermission.PermissionListener
+import com.gun0912.tedpermission.TedPermission
+
 import com.nightshade.lolproject.R
 import com.nightshade.lolproject.customview.ExtendedViewPager
 import com.nightshade.lolproject.customview.ImageLoader
 import com.nightshade.lolproject.customview.TouchImageView
+import kotlinx.android.synthetic.main.custom_fullscreen.*
+import java.io.IOException
 import java.util.*
 
 /**a
@@ -32,6 +46,13 @@ class Fullscreen : Activity(), View.OnTouchListener {
     internal var oldDist: Float = 0.toFloat()
     internal var listimage: ArrayList<String>? = ArrayList()
     internal var pos: Int = 0
+    val options = RequestOptions()
+            .fitCenter()
+            .diskCacheStrategy(DiskCacheStrategy.NONE)
+            .skipMemoryCache(true)
+            .dontAnimate()
+            .error(R.drawable.img_error)
+            .priority(Priority.HIGH)
 
     override fun onCreate(savedInstanceState: Bundle?) {
 
@@ -106,7 +127,54 @@ class Fullscreen : Activity(), View.OnTouchListener {
         }
 
         override fun instantiateItem(container: ViewGroup, position: Int): View {
+            Log.e("Imageeeeee", position.toString())
 
+            setWallpaper.setOnClickListener {
+                //            val permission = ActivityCompat.checkSelfPermission(applicationContext, Manifest.permission.SET_WALLPAPER )
+//
+//            if (permission != PackageManager.PERMISSION_GRANTED) {
+//                // We don't have permission so prompt the user
+//                Log.e("Per","fail")
+//                ActivityCompat.requestPermissions(
+//                        this,
+//                        PERMISSIONS_WALLPAPER,
+//                        REQUEST_SET_WALLPAPER
+//                )
+//            } else {
+//                Log.e("Per","success")
+//
+//
+//            }
+
+                val permissionlistener = object : PermissionListener {
+                    override fun onPermissionGranted() {
+                        Glide.with(application)
+                                .asBitmap()
+                                .load(listimage!![position])
+                                .apply(options)
+                                .into(object : SimpleTarget<Bitmap>() {
+                                    override fun onResourceReady(resourceLoading: Bitmap?, transition: Transition<in Bitmap>?) {
+                                        val wallpaperManager = WallpaperManager.getInstance(applicationContext)
+                                        try {
+                                            wallpaperManager.setBitmap(resourceLoading)
+                                            Toast.makeText(applicationContext, "Set wallpaper successfully!", Toast.LENGTH_LONG).show()
+                                        } catch (e : IOException) {
+                                            e.printStackTrace()
+                                        }
+                                    }
+                                })
+                    }
+
+                    override fun onPermissionDenied(deniedPermissions: ArrayList<String>) =
+                            Toast.makeText(this@Fullscreen, getString(R.string.per_deni) + deniedPermissions.toString(), Toast.LENGTH_SHORT).show()
+                }
+
+                TedPermission.with(this@Fullscreen)
+                        .setPermissionListener(permissionlistener)
+                        .setDeniedMessage(getString(R.string.per_turnon))
+                        .setPermissions(Manifest.permission.SET_WALLPAPER)
+                        .check()
+            }
             val img = TouchImageView(container.context)
             val mLoader = ImageLoader(container.context)
             mLoader.DisplayImageFull(listimage!![position], img)
@@ -145,7 +213,7 @@ class Fullscreen : Activity(), View.OnTouchListener {
     override fun onRequestPermissionsResult(
             requestCode: Int, permissions: Array<String>, grantResults: IntArray) {
         when (requestCode) {
-            REQUEST_ID_MULTIPLE_PERMISSIONS -> if (ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED) {
+            REQUEST_ID_MULTIPLE_PERMISSIONS -> if (ActivityCompat.checkSelfPermission(this, Manifest.permission.WRITE_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.READ_EXTERNAL_STORAGE) == PackageManager.PERMISSION_GRANTED && ActivityCompat.checkSelfPermission(this, Manifest.permission.SET_WALLPAPER) == PackageManager.PERMISSION_GRANTED) {
                 init()
             }
         }
@@ -158,11 +226,12 @@ class Fullscreen : Activity(), View.OnTouchListener {
         pos = extras!!.getInt("pos")
 //        println(pos.toString() + "ok")
 
-            listimage =    extras.getStringArrayList("listskin")
+        listimage = extras.getStringArrayList("listskin")
 
-        println(listimage!![0])
+//        println(listimage!![pos])
         assert(listimage != null)
 //        println(listimage!![pos])
+
         mViewPager.adapter = TouchImageAdapter()
         mViewPager.currentItem = pos
         val returnIntent = Intent()
@@ -172,7 +241,9 @@ class Fullscreen : Activity(), View.OnTouchListener {
     companion object {
         val REQUEST_ID_MULTIPLE_PERMISSIONS = 1
         private val REQUEST_EXTERNAL_STORAGE = 1
+        private val REQUEST_SET_WALLPAPER = 1
         private val PERMISSIONS_STORAGE = arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE)
+        private val PERMISSIONS_WALLPAPER = arrayOf(Manifest.permission.SET_WALLPAPER )
         // We can be in one of these 3 states
         val NONE = 0
         val DRAG = 1
