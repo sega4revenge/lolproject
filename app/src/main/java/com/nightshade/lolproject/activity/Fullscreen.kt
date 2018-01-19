@@ -3,12 +3,15 @@ package com.nightshade.lolproject.activity
 import android.Manifest
 import android.app.Activity
 import android.app.WallpaperManager
+import android.content.ContentValues
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.Matrix
 import android.graphics.PointF
 import android.os.Bundle
+import android.os.Environment
+import android.provider.MediaStore
 import android.support.v4.app.ActivityCompat
 import android.support.v4.view.PagerAdapter
 import android.support.v4.view.ViewPager
@@ -27,12 +30,13 @@ import com.bumptech.glide.request.target.SimpleTarget
 import com.bumptech.glide.request.transition.Transition
 import com.gun0912.tedpermission.PermissionListener
 import com.gun0912.tedpermission.TedPermission
-
 import com.nightshade.lolproject.R
 import com.nightshade.lolproject.customview.ExtendedViewPager
 import com.nightshade.lolproject.customview.ImageLoader
 import com.nightshade.lolproject.customview.TouchImageView
 import kotlinx.android.synthetic.main.custom_fullscreen.*
+import java.io.File
+import java.io.FileOutputStream
 import java.io.IOException
 import java.util.*
 
@@ -45,8 +49,13 @@ class Fullscreen : Activity(), View.OnTouchListener {
     internal var savedMatrix = Matrix()
     internal var start = PointF()
     internal var oldDist: Float = 0.toFloat()
+    internal var listimagename: ArrayList<String>? = ArrayList()
     internal var listimage: ArrayList<String>? = ArrayList()
+    internal var listimagepath: ArrayList<String>? = ArrayList()
     internal var pos: Int = 0
+    var rootFolder: File? = null
+    var positionImg: Int = 0
+
     val options = RequestOptions()
             .fitCenter()
             .diskCacheStrategy(DiskCacheStrategy.NONE)
@@ -59,7 +68,13 @@ class Fullscreen : Activity(), View.OnTouchListener {
 
         super.onCreate(savedInstanceState)
         setContentView(R.layout.custom_fullscreen)
+        rootFolder = File(Environment.getExternalStorageDirectory().toString() + "/LolWallpaper")
+        if (!rootFolder!!.exists()) {
+            rootFolder!!.mkdirs()
+        }
+        Log.e("rootFolder", rootFolder.toString())
         verifyStoragePermissions(this)
+
     }
 
     override fun onTouch(v: View, event: MotionEvent): Boolean {
@@ -130,52 +145,6 @@ class Fullscreen : Activity(), View.OnTouchListener {
         override fun instantiateItem(container: ViewGroup, position: Int): View {
 
 
-            setWallpaper.setOnClickListener {
-                //            val permission = ActivityCompat.checkSelfPermission(applicationContext, Manifest.permission.SET_WALLPAPER )
-//
-//            if (permission != PackageManager.PERMISSION_GRANTED) {
-//                // We don't have permission so prompt the user
-//                Log.e("Per","fail")
-//                ActivityCompat.requestPermissions(
-//                        this,
-//                        PERMISSIONS_WALLPAPER,
-//                        REQUEST_SET_WALLPAPER
-//                )
-//            } else {
-//                Log.e("Per","success")
-//
-//
-//            }
-
-                val permissionlistener = object : PermissionListener {
-                    override fun onPermissionGranted() {
-                        Glide.with(application)
-                                .asBitmap()
-                                .load(listimage!![position])
-                                .apply(options)
-                                .into(object : SimpleTarget<Bitmap>() {
-                                    override fun onResourceReady(resourceLoading: Bitmap?, transition: Transition<in Bitmap>?) {
-                                        val wallpaperManager = WallpaperManager.getInstance(applicationContext)
-                                        try {
-                                            wallpaperManager.setBitmap(resourceLoading)
-                                            Toast.makeText(applicationContext, "Set wallpaper successfully!", Toast.LENGTH_LONG).show()
-                                        } catch (e : IOException) {
-                                            e.printStackTrace()
-                                        }
-                                    }
-                                })
-                    }
-
-                    override fun onPermissionDenied(deniedPermissions: ArrayList<String>) =
-                            Toast.makeText(this@Fullscreen, getString(R.string.per_deni) + deniedPermissions.toString(), Toast.LENGTH_SHORT).show()
-                }
-
-                TedPermission.with(this@Fullscreen)
-                        .setPermissionListener(permissionlistener)
-                        .setDeniedMessage(getString(R.string.per_turnon))
-                        .setPermissions(Manifest.permission.SET_WALLPAPER)
-                        .check()
-            }
             val img = TouchImageView(container.context)
             val mLoader = ImageLoader(container.context)
             mLoader.DisplayImageFull(listimage!![position], img)
@@ -226,13 +195,85 @@ class Fullscreen : Activity(), View.OnTouchListener {
         val extras = intent.extras
         pos = extras!!.getInt("pos")
 //        println(pos.toString() + "ok")
-
+        listimagename = extras.getStringArrayList("listskinname")
         listimage = extras.getStringArrayList("listskin")
+        listimagepath = extras.getStringArrayList("listskinpath")
+        positionImg = pos
 
 //        println(listimage!![pos])
         assert(listimage != null)
 //        println(listimage!![pos])
+        setWallpaper.setOnClickListener {
+            val permissionlistener = object : PermissionListener {
+                override fun onPermissionGranted() {
+                    Glide.with(application)
+                            .asBitmap()
+                            .load(listimage!![positionImg])
+                            .apply(options)
+                            .into(object : SimpleTarget<Bitmap>() {
+                                override fun onResourceReady(resourceLoading: Bitmap?, transition: Transition<in Bitmap>?) {
+                                    val wallpaperManager = WallpaperManager.getInstance(applicationContext)
+                                    try {
+                                        wallpaperManager.setBitmap(resourceLoading)
+                                        Toast.makeText(applicationContext, "Set wallpaper successfully!", Toast.LENGTH_LONG).show()
+                                    } catch (e: IOException) {
+                                        e.printStackTrace()
+                                    }
+                                }
+                            })
+                }
 
+                override fun onPermissionDenied(deniedPermissions: ArrayList<String>) =
+                        Toast.makeText(this@Fullscreen, getString(R.string.per_deni) + deniedPermissions.toString(), Toast.LENGTH_SHORT).show()
+            }
+
+            TedPermission.with(this@Fullscreen)
+                    .setPermissionListener(permissionlistener)
+                    .setDeniedMessage(getString(R.string.per_turnon))
+                    .setPermissions(Manifest.permission.SET_WALLPAPER)
+                    .check()
+        }
+        downloadImage.setOnClickListener {
+            Glide.with(applicationContext)
+                    .asBitmap()
+                    .load(listimage!![positionImg])
+                    .apply(options)
+                    .into(object : SimpleTarget<Bitmap>() {
+                        override fun onResourceReady(resourceFull: Bitmap?, transition: Transition<in Bitmap>?) {
+
+                            try {
+                                val nameLoading = listimagepath!![positionImg]
+                                var myDir = File(rootFolder, nameLoading)
+                                Toast.makeText(applicationContext, "Download wallpaper successfully!", Toast.LENGTH_LONG).show()
+                                println(myDir)
+                                if (myDir.exists())
+                                    myDir.delete()
+
+                                val out = FileOutputStream(myDir)
+
+                                resourceFull!!.compress(Bitmap.CompressFormat.JPEG, 90, out)
+
+                                out.flush()
+                                out.close()
+                                var values = ContentValues()
+                                values.put(MediaStore.Images.Media.TITLE, listimagename!![positionImg])
+                                values.put(MediaStore.Images.Media.DESCRIPTION, listimagename!![positionImg])
+                                values.put(MediaStore.Images.Media.DATE_TAKEN, System.currentTimeMillis())
+                                values.put(MediaStore.Images.ImageColumns.BUCKET_ID, Locale.getDefault().displayLanguage)
+                                values.put(MediaStore.Images.ImageColumns.BUCKET_DISPLAY_NAME, Locale.getDefault().displayLanguage)
+                                values.put("_data", myDir.absolutePath)
+
+                               var cr = contentResolver
+                                cr.insert(MediaStore.Images.Media.EXTERNAL_CONTENT_URI, values)
+
+
+                            } catch (e: Exception) {
+                                println(e)
+                            }
+
+                        }
+                    })
+        }
         mViewPager.adapter = TouchImageAdapter()
         mViewPager.currentItem = pos
         mViewPager.addOnPageChangeListener(object : ViewPager.OnPageChangeListener {
@@ -241,7 +282,7 @@ class Fullscreen : Activity(), View.OnTouchListener {
             }
 
             override fun onPageSelected(position: Int) {
-                Log.e("Imageeeeee", position.toString())
+                positionImg = position
             }
 
             override fun onPageScrollStateChanged(state: Int) {
@@ -258,7 +299,7 @@ class Fullscreen : Activity(), View.OnTouchListener {
         private val REQUEST_EXTERNAL_STORAGE = 1
         private val REQUEST_SET_WALLPAPER = 1
         private val PERMISSIONS_STORAGE = arrayOf(Manifest.permission.READ_EXTERNAL_STORAGE, Manifest.permission.WRITE_EXTERNAL_STORAGE)
-        private val PERMISSIONS_WALLPAPER = arrayOf(Manifest.permission.SET_WALLPAPER )
+        private val PERMISSIONS_WALLPAPER = arrayOf(Manifest.permission.SET_WALLPAPER)
         // We can be in one of these 3 states
         val NONE = 0
         val DRAG = 1

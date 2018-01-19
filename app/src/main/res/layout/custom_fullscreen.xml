@@ -8,9 +8,23 @@
         android:id="@+id/view_pager"
         android:layout_width="match_parent"
         android:layout_height="match_parent" />
-        <Button
-            android:id="@+id/setWallpaper"
-            android:layout_width="wrap_content"
+        <LinearLayout
+            android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:text="SET WALLPAPER"/>
+            android:gravity="center"
+            android:layout_alignParentBottom="true"
+            android:orientation="horizontal">
+                <Button
+                    android:id="@+id/setWallpaper"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="SET WALLPAPER"/>
+                <Button
+                    android:id="@+id/downloadImage"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_toRightOf="@id/setWallpaper"
+                    android:text="DOWNLOAD IMAGE"/>
+        </LinearLayout>
+
 </RelativeLayout>
