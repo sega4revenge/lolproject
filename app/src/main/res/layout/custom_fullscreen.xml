@@ -7,24 +7,33 @@
         <com.nightshade.lolproject.customview.ExtendedViewPager
         android:id="@+id/view_pager"
         android:layout_width="match_parent"
-        android:layout_height="match_parent" />
+        android:layout_height="match_parent"
+            android:background="#000000"/>
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:gravity="center"
             android:layout_alignParentBottom="true"
-            android:orientation="horizontal">
+            android:orientation="horizontal"
+            android:background="#000000"
+            android:weightSum="1">
                 <Button
                     android:id="@+id/setWallpaper"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="SET WALLPAPER"/>
+                    android:text="SET WALLPAPER"
+                    android:background="#000000"
+                    android:textColor="@color/blue"
+                    android:layout_weight="0.5"/>
                 <Button
                     android:id="@+id/downloadImage"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_toRightOf="@id/setWallpaper"
-                    android:text="DOWNLOAD IMAGE"/>
+                    android:text="DOWNLOAD IMAGE"
+                    android:textColor="@color/colorAccent"
+                    android:background="#000000"
+                    android:layout_weight="0.5"/>
         </LinearLayout>
 
 </RelativeLayout>
